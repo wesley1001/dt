@@ -2,9 +2,8 @@
 
 var React = require('react-native');
 
-var DataServices = require('./network')
-
-var Book = require('./book')
+var DataServices = require('./network');
+var Book = require('./book');
 
 var {
   View,
@@ -16,14 +15,14 @@ var {
   Image,
 } = React;
 
-var BookList = React.createClass({
+var InformationListDate = React.createClass({
   getInitialState() {
     return {
       book_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
   componentDidMount: function() {
-    DataServices.getBookList(this.props.channel_id)
+    DataServices.getInformationByDate(this.props.date)
       .then( responseData => {
         this.setState({
           book_lists: this.state.book_lists.cloneWithRows(responseData)
@@ -50,7 +49,7 @@ var BookList = React.createClass({
             this.props.navigator.push({
               title: book.title,
               component: Book,
-              passProps: {book_id: book.id}
+              passProps: {book_id: book.id},
             });
           })}
         </View>
@@ -58,7 +57,6 @@ var BookList = React.createClass({
     )
   },
   render: function() {
-      var cententNav = ['头条', '热点', '娱乐', '体育', '财经'];
       return (
         <ListView dataSource={this.state.book_lists} renderRow={this.renderBook} />
       );
@@ -98,4 +96,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = BookList;
+module.exports = InformationListDate;

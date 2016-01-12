@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-
+var moment = require('moment');
 var DataServices = require('./network');
 
 var {
@@ -9,6 +9,8 @@ var {
   Text,
   StyleSheet,
   Image,
+  WebView,
+  ScrollView,
 } = React;
 
 var Book = React.createClass({
@@ -26,27 +28,28 @@ var Book = React.createClass({
       })
       .done();
   },
+  createMarkup: function(body) { 
+    return {__html: body}; 
+  },
   render: function() {
-    console.log(this.state.book);
-      return (
-        <View style={styles.container}>
-          <Image source={{uri: this.state.book.thumbnail}} style={styles.thumbnail} />
-          <View style={styles.rightContainer}>
-            <Text style={styles.title}>{this.state.book.title}</Text>
-            <Text style={styles.year}>{this.state.book.publish_at}</Text>
-          </View>
+    return (
+      <View style={styles.container}>
+        <Image source={{uri: this.state.book.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.thumbnail} />
+        <View style={styles.rightContainer}>
+          <Text style={styles.title}>{this.state.book.title}</Text>
+          <Text style={styles.year}>{moment(this.state.book.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
+          <WebView html={this.state.book.content} />
         </View>
-      );
+      </View>
+    );
   },
 });
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flexDirection: 'column',
+    marginTop:70,
   },
   rightContainer: {
     flex: 1,
@@ -64,8 +67,10 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
   thumbnail: {
-    width: 53,
-    height: 81,
+    height: 300,
+  },
+  content: {
+    fontSize: 14,
   },
   listView: {
     paddingTop: 20,

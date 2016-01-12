@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var BookList = require('./book_lists');
+var HistoryList = require('./history_list');
 
 var {
   PixelRatio,
@@ -52,32 +53,36 @@ var EmptyPage = React.createClass({
   render: function() {
     return (
       <View>
-      <View style={styles.emptyPage}>
-        {this._renderRow('Pop', () => {
-          this.props.navigator.pop();
-        })}
-      </View>
-
-      <View style={styles.emptyPage}>
-        {this._renderRow('Pop to top', () => {
-          this.props.navigator.popToTop();
-        })}
-      </View>
-      <View style={styles.emptyPage}>
-        {this._renderRow('Push View Example', () => {
-          this.props.navigator.push({
-            title: 'Very Long Custom View Example',
-            component: BookList,
-            key: 'book_list',
-          });
-        })}
-      </View>
+        <View style={styles.emptyPage}>
+          {this._renderRow('编辑精选', () => {
+            this.props.navigator.push({
+              title: '编辑精选',
+              component: BookList,
+              passProps: {channel_id: 'app'}
+            });
+          })}
+        </View>
+        <View style={styles.emptyPage}>
+          {this._renderRow('千人千面', () => {
+            this.props.navigator.push({
+              title: '千人千面',
+              component: BookList,
+              passProps: {channel_id: 'all'}
+            });
+          })}
+        </View>
+        <View style={styles.emptyPage}>
+          {this._renderRow('往期内容', () => {
+            this.props.navigator.push({
+              title: '往期内容',
+              component: HistoryList,
+            });
+          })}
+        </View>
       </View>
     );
   },
 });
-
-
 
 var styles = StyleSheet.create({
   emptyPage: {

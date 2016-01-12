@@ -13,17 +13,17 @@ var {
   ScrollView,
 } = React;
 
-var Book = React.createClass({
+var information = React.createClass({
   getInitialState() {
     return {
-      book: {},
+      information: {},
     }
   },
   componentDidMount: function() {
-    DataServices.getBook(this.props.book_id)
+    DataServices.getInformation(this.props.information_id)
       .then( responseData => {
         this.setState({
-          book: responseData,
+          information: responseData,
         });
       })
       .done();
@@ -34,11 +34,11 @@ var Book = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image source={{uri: this.state.book.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.thumbnail} />
+        <Image source={{uri: this.state.information.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.thumbnail} />
         <View style={styles.rightContainer}>
-          <Text style={styles.title}>{this.state.book.title}</Text>
-          <Text style={styles.year}>{moment(this.state.book.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
-          <WebView html={this.state.book.content} />
+          <Text style={styles.title}>{this.state.information.title}</Text>
+          <Text style={styles.year}>{moment(this.state.information.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
+          <WebView html={this.state.information.content} />
         </View>
       </View>
     );
@@ -78,4 +78,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Book;
+module.exports = information;

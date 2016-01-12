@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var BookList = require('./book_lists');
+var InformationList = require('./information_lists');
 var HistoryList = require('./history_list');
 
 var {
@@ -57,7 +57,7 @@ var EmptyPage = React.createClass({
           {this._renderRow('编辑精选', () => {
             this.props.navigator.push({
               title: '编辑精选',
-              component: BookList,
+              component: InformationList,
               passProps: {channel_id: 'app'}
             });
           })}
@@ -66,7 +66,7 @@ var EmptyPage = React.createClass({
           {this._renderRow('千人千面', () => {
             this.props.navigator.push({
               title: '千人千面',
-              component: BookList,
+              component: InformationList,
               passProps: {channel_id: 'all'}
             });
           })}

@@ -3,7 +3,7 @@
 var React = require('react-native');
 var moment = require('moment');
 
-var Information = require('./book');
+var Information = require('./information');
 var InformationListDate = require('./information_date_list');
 var DataServices = require('./network');
 
@@ -43,7 +43,6 @@ var HistoryHotestList = React.createClass({
   },
 
   _today_all: function(title: string, onPress: Function) {
-    console.log("aaaaaa"+title);
     return (
       <View style={styles.content}>
         <TouchableHighlight onPress={onPress}>
@@ -62,7 +61,7 @@ var HistoryHotestList = React.createClass({
             this.props.navigator.push({
               title: information.title,
               component: Information,
-              passProps: {book_id: information.id},
+              passProps: {information_id: information.id},
             });
           })}
           {this._today_all('当天全部', () => {

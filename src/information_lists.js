@@ -4,7 +4,7 @@ var React = require('react-native');
 
 var DataServices = require('./network')
 
-var Book = require('./book')
+var Information = require('./information')
 
 var {
   View,
@@ -16,17 +16,17 @@ var {
   Image,
 } = React;
 
-var BookList = React.createClass({
+var InformationList = React.createClass({
   getInitialState() {
     return {
-      book_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      information_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
   componentDidMount: function() {
-    DataServices.getBookList(this.props.channel_id)
+    DataServices.getInformationList(this.props.channel_id)
       .then( responseData => {
         this.setState({
-          book_lists: this.state.book_lists.cloneWithRows(responseData)
+          information_lists: this.state.information_lists.cloneWithRows(responseData)
         });
       })
       .done();
@@ -41,16 +41,16 @@ var BookList = React.createClass({
       </View>
     );
   },
-  renderBook: function(book){
+  renderInformation: function(information){
     return (
       <View style={styles.container}>
-        <Image source={{uri: book.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.thumbnail} />
+        <Image source={{uri: information.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.thumbnail} />
         <View style={styles.rightContainer}>
-          {this._renderRow(book.title, () => {
+          {this._renderRow(information.title, () => {
             this.props.navigator.push({
-              title: book.title,
-              component: Book,
-              passProps: {book_id: book.id}
+              title: information.title,
+              component: information,
+              passProps: {information_id: information.id}
             });
           })}
         </View>
@@ -60,7 +60,7 @@ var BookList = React.createClass({
   render: function() {
       var cententNav = ['头条', '热点', '娱乐', '体育', '财经'];
       return (
-        <ListView dataSource={this.state.book_lists} renderRow={this.renderBook} />
+        <ListView dataSource={this.state.information_lists} renderRow={this.renderInformation} />
       );
   },
 });
@@ -98,4 +98,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = BookList;
+module.exports = InformationList;

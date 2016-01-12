@@ -3,6 +3,8 @@
 var React = require('react-native');
 var InformationList = require('./information_lists');
 var HistoryList = require('./history_list');
+var UserRegister = require('./users/register');
+var UserLogin = require('./users/login');
 
 var {
   PixelRatio,
@@ -53,6 +55,24 @@ var EmptyPage = React.createClass({
   render: function() {
     return (
       <View>
+        
+        <View style={styles.emptyPage}>
+          {this._renderRow('用户注册', () => {
+            this.props.navigator.push({
+              title: '用户注册',
+              component: UserRegister,
+            });
+          })}
+        </View>
+
+        <View style={styles.emptyPage}>
+          {this._renderRow('用户登录', () => {
+            this.props.navigator.push({
+              title: '用户登录',
+              component: UserLogin,
+            });
+          })}
+        </View>
         <View style={styles.emptyPage}>
           {this._renderRow('编辑精选', () => {
             this.props.navigator.push({

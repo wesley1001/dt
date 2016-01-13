@@ -66,7 +66,7 @@ var HistoryHotestList = React.createClass({
           })}
           {this._today_all('当天全部', () => {
             this.props.navigator.push({
-              title: moment(information.publish_at).format("YYYY-MM-DD HH:mm:ss"),
+              title: moment(information.publish_at).format("YYYY-MM-DD"),
               component: InformationListDate,
               passProps: {date: information.publish_at},
             });
@@ -99,12 +99,6 @@ var styles = StyleSheet.create({
   content: {
     marginTop: 10,
     marginLeft:20,
-  },
-  link:{
-    height:30,
-    width: 80,
-    bottom:0,
-    right:0
   }
 });
 

@@ -30,22 +30,22 @@ var InformationListDate = React.createClass({
       })
       .done();
   },
-  _renderRow: function(title: string, onPress: Function) {
+  _renderRow: function(information, onPress: Function) {
     return (
-      <View>
-        <TouchableHighlight onPress={onPress}>
-          <Text style={styles.title}>{title}</Text>
-        </TouchableHighlight>
-        <View style={styles.separator} />
-      </View>
+      <TouchableHighlight onPress={onPress}>
+        <View style={styles.leftContainerContent}>
+          <Text style={styles.category}>{information.category}</Text>
+          <Text style={styles.title}>{information.title}</Text>
+          <Text style={styles.publish_at}>{information.publish_at}</Text>
+        </View>
+      </TouchableHighlight>
     );
   },
   renderInformation: function(information){
     return (
       <View style={styles.container}>
-        <Image source={{uri: information.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.thumbnail} />
-        <View style={styles.rightContainer}>
-          {this._renderRow(information.title, () => {
+        <View style={styles.leftContainer}>
+          {this._renderRow(information, () => {
             this.props.navigator.push({
               title: information.title,
               component: Information,
@@ -53,13 +53,14 @@ var InformationListDate = React.createClass({
             });
           })}
         </View>
+        <Image source={{uri: information.thumbnail || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} style={styles.rightContainer} />
       </View>
     )
   },
   render: function() {
-      return (
-        <ListView dataSource={this.state.information_lists} renderRow={this.renderInformation} />
-      );
+    return (
+      <ListView dataSource={this.state.information_lists} renderRow={this.renderInformation} />
+    );
   },
 });
 
@@ -69,31 +70,36 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    margin:7,
   },
-  rightContainer: {
+  leftContainer: {
+    flexDirection: 'column',
     flex: 1,
+    marginRight: -5,
   },
-  list: {
+  leftContainerContent: {
     backgroundColor: '#eeeeee',
-    marginTop: 10,
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'space-between',
+    height:80,
+  },
+  category: {
+    fontSize: 10,
+    color: 'blue',
   },
   title: {
-    fontSize: 20,
-    marginBottom: 8,
-    textAlign: 'center',
+    fontSize: 10,
   },
-  year: {
-    textAlign: 'center',
+  publish_at: {
+    fontSize: 6,
+    color: 'blue',
   },
-  thumbnail: {
-    width: 53,
-    height: 81,
+  rightContainer: {
+    flex:1,
+    height: 80,
   },
-  listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
-  },
+  
 });
 
 module.exports = InformationListDate;

@@ -5,6 +5,7 @@ var InformationList = require('./information_lists');
 var HistoryList = require('./history_list');
 var UserRegister = require('./users/register');
 var UserLogin = require('./users/login');
+var Scroll = require('./scroll');
 
 var {
   PixelRatio,
@@ -96,6 +97,15 @@ var EmptyPage = React.createClass({
             this.props.navigator.push({
               title: '往期内容',
               component: HistoryList,
+            });
+          })}
+        </View>
+
+        <View style={styles.emptyPage}>
+          {this._renderRow('往期内容2', () => {
+            this.props.navigator.push({
+              title: '往期内容2',
+              component: Scroll,
             });
           })}
         </View>

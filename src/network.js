@@ -1,7 +1,8 @@
 'use strict';
 
-var SERVER = 'http://121.43.181.142:8079/api';
+// var SERVER = 'http://121.43.181.142:8079/api';
 // var SERVER = 'http://127.0.0.1:3000/api';
+var SERVER = 'http://dtcj.com/api';
 
 var DataServices = {
   'getInformationList': getInformationList,
@@ -92,7 +93,6 @@ function getHistoryHotestInformation(channel_id){
   }})
     .then((response) => response.json())
     .then((responseData) => {
-      console.log("历史最热，加载完成");
       return responseData.data;
     })
 }

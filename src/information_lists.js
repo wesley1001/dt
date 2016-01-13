@@ -58,7 +58,6 @@ var InformationList = React.createClass({
     )
   },
   render: function() {
-      var cententNav = ['头条', '热点', '娱乐', '体育', '财经'];
       return (
         <ListView dataSource={this.state.information_lists} renderRow={this.renderInformation} />
       );

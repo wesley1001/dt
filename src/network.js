@@ -14,7 +14,7 @@ var DataServices = {
   'GetCode': GetCode,
 }
 
-function GetCode(telephone){
+function GetCode(telephone, event){
   var url = `${SERVER}/sms`;
   return fetch(url, {
     headers: {
@@ -24,11 +24,17 @@ function GetCode(telephone){
     method: 'POST',
     body: JSON.stringify({
       telephone: telephone,
-      event: 'register',
+      event: event,
     })
   })
-    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      console.log('response');
+     return response.json() 
+    })
     .then((responseData) => {
+      console.log("用户获取验证码，加载完成");
+      console.log(responseData.data);
       console.log("用户获取验证码，加载完成");
       return responseData.data;
     })
@@ -125,13 +131,21 @@ function getInformationList(channel_id){
     })
 }
 
-function getInformation(id){
+function getInformation(id, token){
   var url = `${SERVER}/information/${id}`;
   console.log(url);
-  return fetch(url, {headers: {"Accept-Version": "v2","Http-Authorization": "VJNCqlAI4Hr1EjFuSWInG6I5L6NYYcnibGTQmia_Uq6rG26AFm_U7XNPHtYcTz3j-bFA4wY4gte6G1l_fdYh3UCDOtTpRMPz6DMIgSclGxNgycdEsS6KkqwAqt9CXapp",}})
-    .then((response) => response.json())
+  return fetch(url, {headers: {"Accept-Version": "v2","Http-Authorization": token,}})
+    .then((response) => {
+      if(response.status > 400 ){
+        console.log(response.status);
+        console.log(JSON.parse(response._bodyInit));
+        console.log(typeof JSON.parse(response._bodyInit).message);
+        throw new Error(JSON.parse(response._bodyInit).message);
+      }
+      return response.json();
+    })
     .then((responseData) => {
-      console.log("Information加载完成");
+      console.log("Information 加载完成");
       return responseData.data;
     })
 }

@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var moment = require('moment');
-var DataServices = require('./network');
+var DataServices = require('../network');
 
 var {
   AsyncStorage,
@@ -11,12 +11,12 @@ var {
   StyleSheet,
   Image,
   WebView,
-  ScrollView,
 } = React;
 
 var BGWASH = 'rgba(255,255,255,0.8)';
+var csss = '<style type="text/css">* {max-width: 100%}</style>'
 
-var information = React.createClass({
+var Information = React.createClass({
    getInitialState() {
     return {
       information: {},
@@ -26,25 +26,28 @@ var information = React.createClass({
   componentDidMount: async function() {
     try {
       var token = await AsyncStorage.getItem("token");
-
-      var information = await DataServices.getInformation(this.props.information_id);
+      var informations = await DataServices.getInformation(this.props.information_id, token);
     } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
+      console.log(error.message)
     }
-
     this.setState({
-      information: information,
+      information: informations,
       token: token,
     })
-    
   },
   render: function() {
+    console.log(this.state.information);
+    
     return (
+      this.state.information.title
+      ?
       <View style={styles.container}>
         <Text style={styles.title}>{this.state.information.title}</Text>
         <Text style={styles.year}>{moment(this.state.information.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
-        <WebView automaticallyAdjustContentInsets={false} html={this.state.information.content} style={styles.content} />
+        <WebView automaticallyAdjustContentInsets={true} html={csss+this.state.information.content} style={styles.content} />
       </View>
+      :
+      <View style={styles.loading}><Text style={styles.title}>.........</Text></View>
     );
   },
 });
@@ -54,6 +57,9 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     marginTop:70,
+  },
+  loading: {
+    marginTop: 80,
   },
   rightContainer: {
     flex: 1,
@@ -82,4 +88,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = information;
+module.exports = Information;

@@ -5,7 +5,7 @@ var moment = require('moment');
 
 var Information = require('./information');
 var InformationListDate = require('./information_date_list');
-var DataServices = require('./network');
+var DataServices = require('../network');
 
 var {
   View,
@@ -35,14 +35,13 @@ var Thumb = React.createClass({
 });
 
 var createThumbRow = (uri, i) => {
-  console.log("start2.....")
   return (
     <Thumb key={i} uri={uri} />
   )
  
 }
 
-var Scroll = React.createClass({
+var HistoryList = React.createClass({
   getInitialState() {
     return {
       history_hotest_information: [],
@@ -140,4 +139,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Scroll;
+module.exports = HistoryList;

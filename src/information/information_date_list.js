@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 
-var DataServices = require('./network');
+var DataServices = require('../network');
 var Information = require('./information');
 
 var {

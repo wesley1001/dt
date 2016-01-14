@@ -33,7 +33,7 @@ var UserRegister = React.createClass({
     console.log(this.state.result);
   },
   _handleGetCode(event){
-    DataServices.GetCode(this.state.telephone)
+    DataServices.GetCode(this.state.telephone, 'register')
       .then( responseData => {
         this.setState({
           code: responseData,

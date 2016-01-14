@@ -2,9 +2,9 @@
 
 var React = require('react-native');
 
-var DataServices = require('./network')
+var DataServices = require('../network');
 
-var Information = require('./information')
+var Information = require('./information');
 
 var {
   View,
@@ -49,7 +49,7 @@ var InformationList = React.createClass({
           {this._renderRow(information.title, () => {
             this.props.navigator.push({
               title: information.title,
-              component: information,
+              component: Information,
               passProps: {information_id: information.id}
             });
           })}

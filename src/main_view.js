@@ -1,11 +1,10 @@
 'use strict';
 
 var React = require('react-native');
-var InformationList = require('./information_lists');
-var HistoryList = require('./history_list');
+var InformationList = require('./information/information_lists');
+var HistoryList = require('./information/history_list');
 var UserRegister = require('./users/register');
 var UserLogin = require('./users/login');
-var Scroll = require('./scroll');
 
 var {
   PixelRatio,
@@ -14,25 +13,6 @@ var {
   StyleSheet,
   TouchableHighlight,
 } = React;
-
-// var MainView = React.createClass({
-//   _handleBackButtonPress: function() {
-//     this.props.navigator.pop();
-//   },
-//   _handleNextButtonPress: function() {
-//     this.props.navigator.push(nextRoute);
-//   },
-
-//   render: function() {
-//     return (
-//       <View>
-//         <Text>
-//           {this.props.myProp}
-//         </Text>
-//       </View>
-//     )
-//   }
-// });
 
 var EmptyPage = React.createClass({
   statics: {
@@ -97,15 +77,6 @@ var EmptyPage = React.createClass({
             this.props.navigator.push({
               title: '往期内容',
               component: HistoryList,
-            });
-          })}
-        </View>
-
-        <View style={styles.emptyPage}>
-          {this._renderRow('往期内容2', () => {
-            this.props.navigator.push({
-              title: '往期内容2',
-              component: Scroll,
             });
           })}
         </View>

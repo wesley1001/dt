@@ -68,8 +68,8 @@ var UserRegister = React.createClass({
           placeholder={'请输入验证码'}
           clearButtonMode={'while-editing'}
           keyboardType={'number-pad'} 
-          onChangeText={(password)=> this.setState({code})} 
-          value={this.state.password}
+          onChangeText={(code)=> this.setState({code})} 
+          value={this.state.code}
         />
         <TextInput 
           style={styles.text_input} 

@@ -12,6 +12,7 @@ var {
   Text,
   StyleSheet,
   TextInput,
+  Image,
 } = React;
 
 var UserLogin = React.createClass({
@@ -47,8 +48,13 @@ var UserLogin = React.createClass({
   _register() {
     console.log('register');
     this.props.navigator.push({
-      title: '用户注册',
+      title: '手机注册',
       component: UserRegister,
+      // backButtonTitle: '11',
+      // shadowHidden: true,
+      // tintColor: 'red',
+      // barTintColor: 'yellow',
+      // navigationBarHidden: true,
     });
   },
   render: function() {
@@ -77,16 +83,31 @@ var UserLogin = React.createClass({
           </Text>
         </TouchableOpacity>
         <View style={styles.another}>
-          <TouchableOpacity onPress={this._forgot}>
-            <Text style={styles.forget}>
+          <TouchableOpacity onPress={this._forgot} style={styles.forget}>
+            <Text>
               忘记密码？
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this._register}>
+          <TouchableOpacity onPress={this._register} style={styles.register}>
             <Text style={styles.have_not}>
-              还没有账号？<Text style={styles.register}>请注册</Text>
+              还没有账号？<Text>请注册</Text>
             </Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.third}>
+          <View>
+            <Text style={styles.third_title}>您还可以选择</Text>
+          </View>
+          <View style={styles.third_images}>
+            <Image 
+              source={require('image!taobao')} 
+              style={[styles.third_image, styles.third_image_taobao]} 
+            />
+            <Image 
+              source={require('image!alipay')} 
+              style={[styles.third_image, styles.third_image_alipay]} 
+            />
+          </View>
         </View>
       </View>
     );
@@ -98,6 +119,36 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     marginTop: 80,
+  },
+  forget: {
+    height:25,
+  },
+  register: {
+    height:25,
+  },
+  third: {
+    flex:1,
+    flexDirection: 'column',
+  },
+  third_title: {
+    textAlign: 'center',
+  },
+  third_images: {
+    flex:1,
+    justifyContent: 'center',
+    flexDirection:'row',
+    marginTop:20,
+  },
+  third_image: {
+    height: 50,
+    borderRadius: 25,
+    width: 50,
+  },
+  third_image_taobao: {
+    marginRight:30,
+  },
+  third_image_alipay: {
+    marginLeft:30,
   },
   another: {
     marginTop: 10,

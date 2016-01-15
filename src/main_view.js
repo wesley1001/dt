@@ -36,7 +36,6 @@ var EmptyPage = React.createClass({
   render: function() {
     return (
       <View>
-        
         <View style={styles.emptyPage}>
           {this._renderRow('用户注册', () => {
             this.props.navigator.push({
@@ -49,7 +48,7 @@ var EmptyPage = React.createClass({
         <View style={styles.emptyPage}>
           {this._renderRow('用户登录', () => {
             this.props.navigator.push({
-              title: '用户登录',
+              title: '登录',
               component: UserLogin,
             });
           })}

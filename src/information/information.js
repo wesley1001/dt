@@ -10,6 +10,7 @@ var {
   Text,
   StyleSheet,
   Image,
+  ScrollView,
   WebView,
 } = React;
 
@@ -41,11 +42,14 @@ var Information = React.createClass({
     return (
       this.state.information.title
       ?
-      <View style={styles.container}>
-        <Text style={styles.title}>{this.state.information.title}</Text>
-        <Text style={styles.year}>{moment(this.state.information.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
+      <ScrollView style={styles.container}>
+        <View style={styles.recipe}>
+          <Text style={styles.title}>{this.state.information.title}</Text>
+          <Text style={styles.year}>{moment(this.state.information.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
+          
+        </View>
         <WebView automaticallyAdjustContentInsets={true} html={csss+this.state.information.content} style={styles.content} />
-      </View>
+      </ScrollView>
       :
       <View style={styles.loading}><Text style={styles.title}>.........</Text></View>
     );
@@ -57,6 +61,9 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     marginTop:70,
+  },
+  recipe: {
+    height: 100,
   },
   loading: {
     marginTop: 80,
@@ -80,6 +87,7 @@ var styles = StyleSheet.create({
     height: 300,
   },
   content: {
+    height:1000,
     backgroundColor: '#eeeeee',
   },
   listView: {

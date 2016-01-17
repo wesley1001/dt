@@ -47,9 +47,9 @@ var dt = React.createClass({
 });
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    }
+  container: {
+      flex: 1,
+  }
 });
 
 AppRegistry.registerComponent('dt', () => dt);

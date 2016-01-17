@@ -11,6 +11,8 @@
 
 #import "RCTRootView.h"
 
+// #import "RCTWeChat.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -32,7 +34,8 @@
    */
 
   // jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
-  jsCodeLocation = [NSURL URLWithString:@"http://172.16.0.39:8081/index.ios.bundle?platform=ios&dev=true"];
+  // jsCodeLocation = [NSURL URLWithString:@"http://172.16.0.39:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.31.244:8081/index.ios.bundle?platform=ios&dev=true"];
 
   /**
    * OPTION 2
@@ -54,5 +57,15 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
+
+// - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+// {
+//   return [[RCTWeChat shareInstance] handleOpenURL: url];
+// }
+
+// - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//   return [[RCTWeChat shareInstance] handleOpenURL: url];
+  
+// }
 
 @end

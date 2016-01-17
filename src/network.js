@@ -2,7 +2,8 @@
 
 // var SERVER = 'http://121.43.181.142:8079/api';
 // var SERVER = 'http://127.0.0.1:3000/api';
-var SERVER = 'http://dtcj.com/api';
+var SERVER = 'http://192.168.31.244:3000/api';
+// var SERVER = 'http://dtcj.com/api';
 
 var DataServices = {
   'getInformationList': getInformationList,

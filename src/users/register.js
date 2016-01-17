@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var DataServices = require('../network');
-var Button = require('react-native-button'); 
 
 var {
   View,

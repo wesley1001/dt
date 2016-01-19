@@ -16,6 +16,8 @@ var Scroll2 = require("./information/scroll")
 var InformationListPullUp =require("./information/scroll_pullup_information")
 var InformationListPullDown = require("./information/scroll_pulldown")
 
+var Main = require("./information/main")
+
 var {
   PixelRatio,
   View,
@@ -78,11 +80,19 @@ var EmptyPage = React.createClass({
           })}
         </View>
         <View style={styles.emptyPage}>
+          {this._renderRow('首页', () => {
+            this.props.navigator.push({
+              title: '首页',
+              component: Main,
+            });
+          })}
+        </View>
+        <View style={styles.emptyPage}>
           {this._renderRow('千人千面', () => {
             this.props.navigator.push({
               title: '千人千面',
               component: InformationList,
-              passProps: {channel_id: 'all'}
+              params: {channel_id: 'all'}
             });
           })}
         </View>
@@ -157,7 +167,7 @@ var EmptyPage = React.createClass({
             this.props.navigator.push({
               title: '上拉',
               component: InformationListPullUp,
-              passProps: {channel_id: 'all'},
+              params: {channel_id: 'all'},
             });
           })}
         </View>

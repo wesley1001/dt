@@ -23,7 +23,7 @@ var UserRegister = React.createClass({
   componentDidMount: function() {
   },
   _handlePress(event) {
-    DataServices.Register(this.state.telephone, this.state.password, this.state.code)
+    DataServices.Forgot(this.state.telephone, this.state.password, this.state.code)
       .then( responseData => {
         this.setState({
           result: responseData,

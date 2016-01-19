@@ -5,6 +5,8 @@ var DataServices = require('../network');
 var UserRegister = require('./register');
 var UserForgot = require('./forgot');
 
+var HistoryList = require('../information/history_list');
+
 var {
   AsyncStorage,
   TouchableOpacity,
@@ -32,8 +34,13 @@ var UserLogin = React.createClass({
       this.setState({
         result: responseData,
       });
-    
+      
       await AsyncStorage.setItem("token", responseData.auth_token);
+
+      this.props.navigator.push({
+        title: '往期内容',
+        component: HistoryList,
+      });
     }catch (error){
       this._appendMessage('AsyncStorage error: ' + error.message);
     }

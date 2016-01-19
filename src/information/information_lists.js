@@ -5,7 +5,8 @@ var React = require('react-native');
 var DataServices = require('../network');
 
 var Information = require('./information');
-var RNRL = require("aaaaa");
+var RNRL = require("react-native-refreshable-listview");
+
 var {
   View,
   Text,
@@ -13,16 +14,21 @@ var {
   ScrollView,
   TouchableHighlight,
   ListView,
+  TouchableOpacity,
   Image,
 } = React;
 
 var InformationList = React.createClass({
   getInitialState() {
     return {
+      id:"",
       information_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
   componentDidMount: function() {
+    this.setState({
+      id: this.props.id
+    });
     DataServices.getInformationList(this.props.channel_id)
       .then( responseData => {
         this.setState({
@@ -69,34 +75,35 @@ var InformationList = React.createClass({
       })
       .done();
   },
+  _pressButton() {
+    this.props.navigator.pop()
+  },
   render: function() {
-      return (
-        <View>
-        <View style={styles.tooheight}>
-          <Text>太高</Text>
-        </View>
-        <RNRL 
-          // renderHeader
-          dataSource={this.state.information_lists} 
-          renderRow={this.renderInformation}
-          loadData={this.reloadArticles}
-          pullingPrompt="加载中"
-          holdingPrompt="加载中"
-        />
-        </View>
-      );
+    return (
+      <View>
+      <View>
+          <Text>获得的参数: id={ this.state.id }</Text>
+          <TouchableOpacity onPress={this._pressButton}>
+              <Text>点我跳回去</Text>
+          </TouchableOpacity>
+      </View>
+      <RNRL
+        dataSource={this.state.information_lists} 
+        renderRow={this.renderInformation}
+        loadData={this.reloadArticles}
+        style={styles.container}
+        pullingPrompt="加载中"
+        holdingPrompt="加载中"
+      />
+      </View>
+    );
   },
 });
 
 var styles = StyleSheet.create({
-  tooheight:{
-    marginTop:100,
-  },
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   rightContainer: {

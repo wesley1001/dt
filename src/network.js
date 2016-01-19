@@ -2,17 +2,54 @@
 
 // var SERVER = 'http://121.43.181.142:8079/api';
 // var SERVER = 'http://127.0.0.1:3000/api';
-var SERVER = 'http://192.168.31.244:3000/api';
-// var SERVER = 'http://dtcj.com/api';
+// var SERVER = 'http://192.168.31.244:3000/api';
+var SERVER = 'http://dtcj.com/api';
+
+var React = require('react-native');
+var {
+  Alert,
+} = React;
 
 var DataServices = {
+  'getBanners': getBanners,
+  'getBlocks': getBlocks,
   'getInformationList': getInformationList,
   'getInformation': getInformation,
   'getHistoryHotestInformation': getHistoryHotestInformation,
   'getInformationByDate': getInformationByDate,
   'Register': Register,
+  'Forgot': Forgot,
   'UserLogin': UserLogin,
   'GetCode': GetCode,
+}
+
+function getBanners(){
+  // console.log('11111111111111')
+  var url = `${SERVER}/banners`;
+
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+    }
+  })
+  .then((response) => {
+    // console.log(response)
+    // console.log('response')
+    return response_date(response)
+  })
+}
+
+function getBlocks(){
+  var url = `${SERVER}/blocks`;
+
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+    }
+  })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 function GetCode(telephone, event){
@@ -28,17 +65,24 @@ function GetCode(telephone, event){
       event: event,
     })
   })
-    .then((response) => {
-      console.log(response);
-      console.log('response');
-     return response.json() 
-    })
-    .then((responseData) => {
-      console.log("用户获取验证码，加载完成");
-      console.log(responseData.data);
-      console.log("用户获取验证码，加载完成");
+  .then((response) => {
+    return response_date(response)
+  })
+}
+
+function response_date(response){
+  console.log(response.status)
+  if(response.status > 400 && response.status < 500){
+    Alert.alert(
+      JSON.parse(response._bodyInit).message,
+    )
+  }else if(response.status >= 500){
+    throw "34567890-"
+  }else{
+    return response.json().then((responseData) => {
       return responseData.data;
-    })
+    });
+  } 
 }
 
 function UserLogin(telephone, password){
@@ -57,11 +101,10 @@ function UserLogin(telephone, password){
       },
     })
   })
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log("用户登录，加载完成");
-      return responseData.data;
-    })
+  .then((response) => {
+    console.log(response.status);
+    return response_date(response)
+  })
 }
 
 function Register(telephone, password, code){
@@ -81,12 +124,32 @@ function Register(telephone, password, code){
       },
     })
   })
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log("用户注册，加载完成");
-      console.log(responseData);
-      return responseData.data;
+  .then((response) => {
+    return response_date(response)
+  })
+}
+
+function Forgot(telephone, password, code){
+  var url = `${SERVER}/user/reset_password`;
+  console.log(telephone+password);
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+      "Content-Type": "application/json",
+    }, 
+    method: 'POST',
+    body: JSON.stringify({
+      user: {
+        telephone: telephone,
+        password: password,
+        code: code,
+      },
     })
+  })
+  .then((response) => {
+    console.log(response.status)
+    return response_date(response)
+  })
 }
 
 function getHistoryHotestInformation(channel_id){
@@ -98,10 +161,9 @@ function getHistoryHotestInformation(channel_id){
     "Accept-Version": "v2",
     "Http-Authorization": "clvTFGghfLFeWVnJE4FLjz42t_9ssitH8VaXjnFitUXBw_OjAGhH_VkU4sYcB_cKjxHePHEAucpYfGjy7esdpLq_SKKKkqLm8mS8wr4BZJ9kG5gCZXYkI1NyFTIR2pau",
   }})
-    .then((response) => response.json())
-    .then((responseData) => {
-      return responseData.data;
-    })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 function getInformationByDate(date){
@@ -112,11 +174,9 @@ function getInformationByDate(date){
     "Accept-Version": "v2",
     "Http-Authorization": "clvTFGghfLFeWVnJE4FLjz42t_9ssitH8VaXjnFitUXBw_OjAGhH_VkU4sYcB_cKjxHePHEAucpYfGjy7esdpLq_SKKKkqLm8mS8wr4BZJ9kG5gCZXYkI1NyFTIR2pau",
   }})
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log("当天全部，加载完成");
-      return responseData.data;
-    })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 function getInformationList(channel_id){
@@ -125,30 +185,18 @@ function getInformationList(channel_id){
     "Accept-Version": "v2",
     "Http-Authorization": "clvTFGghfLFeWVnJE4FLjz42t_9ssitH8VaXjnFitUXBw_OjAGhH_VkU4sYcB_cKjxHePHEAucpYfGjy7esdpLq_SKKKkqLm8mS8wr4BZJ9kG5gCZXYkI1NyFTIR2pau",
   }})
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log("加载完成");
-      return responseData.data;
-    })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 function getInformation(id, token){
   var url = `${SERVER}/information/${id}`;
   console.log(url);
   return fetch(url, {headers: {"Accept-Version": "v2","Http-Authorization": token,}})
-    .then((response) => {
-      if(response.status > 400 ){
-        console.log(response.status);
-        console.log(JSON.parse(response._bodyInit));
-        console.log(typeof JSON.parse(response._bodyInit).message);
-        throw new Error(JSON.parse(response._bodyInit).message);
-      }
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log("Information 加载完成");
-      return responseData.data;
-    })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 module.exports = DataServices;

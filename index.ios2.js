@@ -5,12 +5,10 @@
 'use strict';
 
 var React = require('react-native');
-var MainPage = require('./src/pages/main');
-
-
+var MainView = require('./src/main_view.js');
 var {
   AppRegistry,
-  Navigator,
+  NavigatorIOS,
   StyleSheet,
   View,
   Text,
@@ -19,7 +17,7 @@ var {
 var dt = React.createClass({
   getInitialState() {
     return {
-      loaded: true
+      loaded: false
     }
   },
   renderLoadingView: function() {
@@ -36,16 +34,16 @@ var dt = React.createClass({
       return this.renderLoadingView();
     }
     return (
-      <Navigator
-        initialRoute={{name: 'My First Scene', component: MainPage}}
-        // configureScene={() => {
-        //   return Navigator.SceneConfigs.VerticalDownSwipeJump;
-        // }}
-        renderScene={(route, navigator) =>{
-          let Component = route.component;
-          if(route.component) {
-            return <Component {...route.params} navigator={navigator} />
-          }
+      <NavigatorIOS
+        style={styles.container}
+        shadowHidden={false}
+        itemWrapperStyle={styles.navWrap}
+        initialRoute={{
+          component: MainView,
+          title: '首页',
+          passProps: { 
+            myProp: 'foo',
+          },
         }}
       />
     );
@@ -57,9 +55,9 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  container2:{
+  navWrap:{
     flex:1,
-    top:100,
+    marginTop:70,
   }
 });
 

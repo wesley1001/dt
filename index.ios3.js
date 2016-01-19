@@ -5,7 +5,7 @@
 'use strict';
 
 var React = require('react-native');
-var MainPage = require('./src/pages/main');
+var FirstPageComponent = require('./src/main_view2.js');
 
 
 var {
@@ -37,7 +37,7 @@ var dt = React.createClass({
     }
     return (
       <Navigator
-        initialRoute={{name: 'My First Scene', component: MainPage}}
+        initialRoute={{name: 'My First Scene', component: FirstPageComponent}}
         // configureScene={() => {
         //   return Navigator.SceneConfigs.VerticalDownSwipeJump;
         // }}

@@ -8,7 +8,10 @@ var Information = require('./information');
 
 var TimerMixin = require('react-timer-mixin');
 
+var RNRL = require("react-native-refreshable-listview");
+
 var {
+  RefreshControl,
   View,
   Text,
   StyleSheet,
@@ -37,6 +40,8 @@ var InformationListPullUp = React.createClass({
       information_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       filter: '',
       queryNumber: 0,
+      isRefreshing: false,
+      loaded: 0,
     }
   },
   componentDidMount: function() {
@@ -112,6 +117,25 @@ var InformationListPullUp = React.createClass({
       })
       .done();
   },
+  _onRefresh() {
+    this.setState({isRefreshing: true});
+    console.log("start......")
+    setTimeout(() => {
+      // prepend 10 items
+      const rowData = Array.from(new Array(10))
+      .map((val, i) => ({
+        text: 'Loaded row' + (+this.state.loaded + i),
+        clicks: 0,
+      }))
+      .concat(this.state.rowData);
+
+      this.setState({
+        loaded: this.state.loaded + 10,
+        isRefreshing: false,
+        rowData: rowData,
+      });
+    }, 5000);
+  },
   render: function() {
     var content = this.state.information_lists.getRowCount() === 0 ?
     <View>
@@ -123,31 +147,50 @@ var InformationListPullUp = React.createClass({
       renderRow={this.renderInformation}
       renderFooter={this.renderFooter}
       onEndReached={this.onEndReached}
+      onEndReachedThreshold={50}
+      refreshControl={
+        <RefreshControl
+          refreshing={this.state.isRefreshing}
+          onRefresh={this._onRefresh}
+          tintColor="#ff0000"
+          title="Loading..."
+          colors={['#ff0000', '#00ff00', '#0000ff']}
+          progressBackgroundColor="#ffff00"
+        />
+      }
+      // loadData={this.reloadArticles}
+      // refreshDescription=""
     />
 
     return (
       <View style={styles.container}>
+        <View>
+          <TouchableHighlight 
+            style={styles.nav}
+            onPress={() => {
+            console.log("456789545678")
+            this.props.navigator.pop();
+          }}>
+            <Text>返回</Text>
+          </TouchableHighlight>
+        </View>
         {content}
       </View>
     )
-
   },
 });
 
 var styles = StyleSheet.create({
-  tooheight:{
-    // marginTop:100,
-  },
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: 'white',
-  // },
   noMoviesText: {
-    marginTop: 80,
     color: '#888888',
   },
+  nav:{
+    flex:1,
+    flexDirection:'column',
+    justifyContent: 'space-between',
+  },
   container: {
-    // marginTop:60,
+    marginTop:100,
     flex: 1,
     flexDirection: 'row',
     // justifyContent: 'center',
@@ -159,7 +202,7 @@ var styles = StyleSheet.create({
   },
   list: {
     backgroundColor: '#eeeeee',
-    marginTop: 10,
+    // marginTop: 10,
   },
   separator: {
     height: 1,

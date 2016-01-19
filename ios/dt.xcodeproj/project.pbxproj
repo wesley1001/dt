@@ -126,6 +126,12 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		CBD6EC0A1C4D125200EB9A42 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		CBD6EC0B1C4D125200EB9A42 /* read_me.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		CBD6EC0C1C4D125200EB9A42 /* WechatAuthSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		CBD6EC0D1C4D125200EB9A42 /* WXApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		CBD6EC0E1C4D125200EB9A42 /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		CBD6EC0F1C4D126000EB9A42 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = ../../RCTWeChat/libWeChatSDK.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +293,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CBD6EC0F1C4D126000EB9A42 /* libWeChatSDK.a */,
+				CBD6EC091C4D125200EB9A42 /* wechat */,
 				13B07FAE1A68108700A75B9A /* dt */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* dtTests */,
@@ -303,6 +311,19 @@
 				00E356EE1AD99517003FC87E /* dtTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CBD6EC091C4D125200EB9A42 /* wechat */ = {
+			isa = PBXGroup;
+			children = (
+				CBD6EC0A1C4D125200EB9A42 /* libWeChatSDK.a */,
+				CBD6EC0B1C4D125200EB9A42 /* read_me.txt */,
+				CBD6EC0C1C4D125200EB9A42 /* WechatAuthSDK.h */,
+				CBD6EC0D1C4D125200EB9A42 /* WXApi.h */,
+				CBD6EC0E1C4D125200EB9A42 /* WXApiObject.h */,
+			);
+			name = wechat;
+			path = dt/wechat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -620,7 +641,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"/Users/guyifeng/workspace/dt/node_modules/react-native/React/**",
+					"/Users/guyifeng/Downloads/react-native-wechat-ios-master/RCTWeChat/**",
 				);
 				INFOPLIST_FILE = dt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -639,7 +661,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"/Users/guyifeng/workspace/dt/node_modules/react-native/React/**",
+					"/Users/guyifeng/Downloads/react-native-wechat-ios-master/RCTWeChat/RCTWeChat/**",
 				);
 				INFOPLIST_FILE = dt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -686,7 +709,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"/Users/guyifeng/workspace/dt/node_modules/react-native-wechat-ios/RCTWeChat/**",
+					"/Users/guyifeng/workspace/dt/node_modules/react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -726,7 +750,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"/Users/guyifeng/workspace/dt/node_modules/react-native/React/**",
+					"/Users/guyifeng/workspace/dt/node_modules/react-native-wechat-ios/RCTWeChat/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

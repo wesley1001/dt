@@ -62,30 +62,24 @@ var HistoryList = React.createClass({
         style={styles.scrollView} >
           {this.state.history_hotest_information.map(function(information,i){
             return (
-              <TouchableHighlight onPress={_this.props.navigator.push({
-              title: information.title,
-              component: Information,
-              passProps: {information_id: information.id},
-            })}>
-            <View style={styles.card}>
-              <View style={styles.picture}>
-                <Image style={styles.image} source={{uri:information.thumbnail}} />
-                <View style={styles.keyword_to_display_title}>
-                  <Text style={styles.keyword_to_display}>
-                    {information.keyword_to_display}
-                  </Text>
-                  <Text style={styles.title}>
-                    {information.title}
-                  </Text>
+              <View style={styles.card}>
+                <View style={styles.picture}>
+                  <Image style={styles.image} source={{uri:information.thumbnail}} />
+                  <View style={styles.keyword_to_display_title}>
+                    <Text style={styles.keyword_to_display}>
+                      {information.keyword_to_display}
+                    </Text>
+                    <Text style={styles.title}>
+                      {information.title}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.content}>
+                  <View style={styles.summary}>
+                    <Text>{information.summary.substr(0,50)}</Text>
+                  </View>
                 </View>
               </View>
-              <View style={styles.content}>
-                <View style={styles.summary}>
-                  <Text>{information.summary.substr(0,50)}</Text>
-                </View>
-              </View>
-            </View>
-            </TouchableHighlight>
             )
           })}
       </ScrollView>

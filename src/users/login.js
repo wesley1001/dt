@@ -7,6 +7,8 @@ var UserForgot = require('./forgot');
 
 var HistoryList = require('../information/history_list');
 
+var Main = require('../pages/main');
+
 var {
   AsyncStorage,
   TouchableOpacity,
@@ -38,7 +40,7 @@ var UserLogin = React.createClass({
       await AsyncStorage.setItem("token", responseData.auth_token);
 
       this.props.navigator.push({
-        title: '往期内容',
+        title: '首页',
         component: HistoryList,
       });
     }catch (error){
@@ -66,56 +68,56 @@ var UserLogin = React.createClass({
   },
   render: function() {
     return (
-      <View style={styles.container}>
-        <TextInput 
-          style={styles.text_input} 
-          returnKeyType={'google'} 
-          placeholder={'手机号'} 
-          clearButtonMode={'while-editing'} 
-          keyboardType={'number-pad'} 
-          onChangeText={(telephone) => this.setState({telephone})} 
-          value={this.state.telephone}
-        />
-        <TextInput 
-          style={styles.text_input} 
-          placeholder={'密码'}
-          clearButtonMode={'while-editing'}
-          password={true}
-          onChangeText={(password)=> this.setState({password})} 
-          value={this.state.password}
-        />
-        <TouchableOpacity onPress={this._handlePress}>
-          <Text style={styles.button}>
-            登录
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.another}>
-          <TouchableOpacity onPress={this._forgot} style={styles.forget}>
-            <Text>
-              忘记密码？
+        <View style={styles.container}>
+          <TextInput 
+            style={styles.text_input} 
+            returnKeyType={'google'} 
+            placeholder={'手机号'} 
+            clearButtonMode={'while-editing'} 
+            keyboardType={'number-pad'} 
+            onChangeText={(telephone) => this.setState({telephone})} 
+            value={this.state.telephone}
+          />
+          <TextInput 
+            style={styles.text_input} 
+            placeholder={'密码'}
+            clearButtonMode={'while-editing'}
+            password={true}
+            onChangeText={(password)=> this.setState({password})} 
+            value={this.state.password}
+          />
+          <TouchableOpacity onPress={this._handlePress}>
+            <Text style={styles.button}>
+              登录
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this._register} style={styles.register}>
-            <Text style={styles.have_not}>
-              还没有账号？<Text>请注册</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.third}>
-          <View>
-            <Text style={styles.third_title}>您还可以选择</Text>
+          <View style={styles.another}>
+            <TouchableOpacity onPress={this._forgot} style={styles.forget}>
+              <Text>
+                忘记密码？
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._register} style={styles.register}>
+              <Text style={styles.have_not}>
+                还没有账号？<Text>请注册</Text>
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.third_images}>
-            <Image 
-              source={require('image!taobao')} 
-              style={[styles.third_image, styles.third_image_taobao]} 
-            />
-            <Image 
-              source={require('image!alipay')} 
-              style={[styles.third_image, styles.third_image_alipay]} 
-            />
+          <View style={styles.third}>
+            <View>
+              <Text style={styles.third_title}>您还可以选择</Text>
+            </View>
+            <View style={styles.third_images}>
+              <Image 
+                source={require('image!taobao')} 
+                style={[styles.third_image, styles.third_image_taobao]} 
+              />
+              <Image 
+                source={require('image!alipay')} 
+                style={[styles.third_image, styles.third_image_alipay]} 
+              />
+            </View>
           </View>
-        </View>
       </View>
     );
   },
@@ -125,7 +127,21 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: 80,
+    marginTop: 60,
+  },
+  container2: {
+    // flex: 1,
+    // flexDirection: 'column',
+  },
+  nav: {
+    marginTop:20,
+    height: 36,
+    // backgroundColor: 'red',
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:10,
+    borderWidth:1,
   },
   forget: {
     height:25,
@@ -182,7 +198,7 @@ var styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
     borderRadius: 15,
-    backgroundColor: '#dddddd',
+    // backgroundColor: '#dddddd',
     color: 'gray',
     textAlign: 'center',
     paddingTop: 8,

@@ -2,6 +2,8 @@
 
 var React = require('react-native');
 var DataServices = require('../network');
+var UserLogin = require('./login');
+var Option = require('./option');
 
 var {
   View,
@@ -9,6 +11,8 @@ var {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  TouchableHighlight,
+  NavigatorIOS,
 } = React;
 
 var Person = React.createClass({
@@ -39,7 +43,7 @@ var Person = React.createClass({
             <TouchableOpacity 
               onPress={() => {
                 this.props.navigator.push({
-                  component: Person,
+                  component: Option,
                 });
               }}>
               <Text>设置</Text>
@@ -47,8 +51,38 @@ var Person = React.createClass({
           </View>
         </View>
         <View style={styles.detail}>
-          <View>
-            <Text>顾益峰</Text>
+          <View style={styles.detail_login}>
+            <TouchableHighlight 
+              onPress={() => {
+                this.props.navigator.push({
+                  component: UserLogin,
+                });
+              }}
+              >
+              <View style={styles.person}>
+                <Text>手机登录</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              onPress={() => {
+                // this.props.navigator.push({
+                //   component: UserLogin,
+                // });
+              }}>
+              <View style={styles.person}>
+                <Text>淘宝登录</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              onPress={() => {
+                // this.props.navigator.push({
+                //   component: UserLogin,
+                // });
+              }}>
+              <View style={styles.person}>
+                <Text>支付宝登录</Text>
+              </View>
+            </TouchableHighlight>
           </View>
         </View>
       </View>
@@ -74,6 +108,11 @@ var styles = StyleSheet.create({
   },
   detail: {
     padding: 10,
+  },
+  detail_login: {
+    flex:1,
+    flexDirection:'row',
+    justifyContent: 'space-around',
   }
   
 });

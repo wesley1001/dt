@@ -54,6 +54,7 @@ var Main = React.createClass({
           });
         }}>
         <View style={styles.list}>
+<<<<<<< HEAD
           <View style={styles.list_left}>
             <Text style={styles.keyword_to_display}>{information.keyword_to_display}</Text>
             <Text style={styles.title}>{information.title}</Text>
@@ -68,12 +69,32 @@ var Main = React.createClass({
               <Text style={styles.paragraph_size_text}>{information.paragraph_size}</Text>
             </View>
           </View>
+=======
+        <View style={styles.list_left}>
+          <Text style={styles.keyword_to_display}>{information.keyword_to_display}</Text>
+          <Text style={styles.title}>{information.title}</Text>
+          <Text style={styles.publish_at}>{Moment(information.publish_at).format("YYYY-MM-DD HH:mm")}</Text>
+        </View>
+        <View style={styles.list_right} >
+          <Image 
+            source={{uri: information.thumbnail}} 
+            style={styles.list_right_thumbnail} 
+          />
+          <View style={styles.paragraph_size}>
+            <Text style={styles.paragraph_size_text}>{information.paragraph_size}</Text>
+          </View>
+        </View>
+>>>>>>> origin/master
         </View>
       </TouchableHighlight>
     )
   },
   renderHeader () {
+<<<<<<< HEAD
     var _this = this;
+=======
+    console.log("1234567876543")
+>>>>>>> origin/master
     return (
         <Swiper 
           style={styles.wrapper} 
@@ -84,7 +105,11 @@ var Main = React.createClass({
           showsPagination={false}>
           {
             this.state.banners.map(function(banner,i){
+<<<<<<< HEAD
               var information_id = banner.url.split("/news/")[1];
+=======
+              // console.log(banner)
+>>>>>>> origin/master
               return (
                 <TouchableHighlight 
                   key={i}

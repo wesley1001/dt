@@ -42,6 +42,7 @@ var Main = React.createClass({
       .done();
   },
   renderInformation: function(information){
+    console.log(information)
     return (
       <TouchableHighlight 
         onPress={() => {
@@ -57,18 +58,23 @@ var Main = React.createClass({
           <Text style={styles.title}>{information.title}</Text>
           <Text style={styles.publish_at}>{Moment(information.publish_at).format("YYYY-MM-DD HH:mm")}</Text>
         </View>
-        <Image 
-          source={{uri: information.thumbnail}} 
-          style={styles.list_right} 
-        />
+        <View style={styles.list_right} >
+          <Image 
+            source={{uri: information.thumbnail}} 
+            style={styles.list_right_thumbnail} 
+          />
+          <View style={styles.paragraph_size}>
+            <Text style={styles.paragraph_size_text}>{information.paragraph_size}</Text>
+          </View>
+        </View>
         </View>
       </TouchableHighlight>
       
     )
   },
-  render: function() {
+  renderHeader () {
+    console.log("1234567876543")
     return (
-      <View style={styles.container}>
         <Swiper 
           style={styles.wrapper} 
           showsButtons={false}
@@ -78,7 +84,7 @@ var Main = React.createClass({
           showsPagination={false}>
           {
             this.state.banners.map(function(banner,i){
-              console.log(banner)
+              // console.log(banner)
               return (
                 <View key={i} style={styles.banner}>
                   <Image 
@@ -98,7 +104,13 @@ var Main = React.createClass({
             })
           }
         </Swiper>
+    );
+  },
+  render: function() {
+    return (
+      <View style={styles.container}>
         <ListView
+          renderHeader={this.renderHeader}
           dataSource={this.state.information_lists} 
           renderRow={this.renderInformation}
           style={styles.lists}
@@ -112,6 +124,8 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+  },
+  wrapper:{
   },
   banner: {
   },
@@ -147,9 +161,10 @@ var styles = StyleSheet.create({
   },
   lists: {
     backgroundColor: 'eeeeee',
-    padding:10,
   },
   list: {
+    marginLeft:10,
+    marginRight:10,
     marginTop: 15,
     flex:1,
     height:120,
@@ -162,7 +177,7 @@ var styles = StyleSheet.create({
   },
   list_left: {
     padding:6,
-    width:Dimensions.get('window').width/2-10,
+    width:Dimensions.get('window').width/2,
     flex:1,
     flexDirection: 'column',
     justifyContent: 'space-between'
@@ -178,11 +193,32 @@ var styles = StyleSheet.create({
     fontSize:12,
   },
   list_right: {
-    height: 120,
     marginTop:-2,
     borderRadius:5,
-    width:Dimensions.get('window').width/2-10,
-  }
+    marginRight:-2,
+  },
+  list_right_thumbnail: {
+    borderRadius:5,
+    width:Dimensions.get('window').width/2,
+    height: 120,
+  },
+  paragraph_size:{
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    borderRadius:10,
+    top:10,
+    right: 10,
+    paddingLeft:6,
+    paddingTop:2,
+    backgroundColor: 'white'
+  },
+  paragraph_size_text:{
+    fontSize:14,
+    width:10,
+    height:14,
+    color:'rgba(194,127,22,0.8)',
+  },
 });
 
 module.exports = Main;

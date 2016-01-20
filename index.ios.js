@@ -38,9 +38,9 @@ var dt = React.createClass({
     return (
       <Navigator
         initialRoute={{name: 'My First Scene', component: MainPage}}
-        // configureScene={() => {
-        //   return Navigator.SceneConfigs.VerticalDownSwipeJump;
-        // }}
+        configureScene={() => {
+          return Navigator.SceneConfigs.VerticalUpSwipeJump;
+        }}
         renderScene={(route, navigator) =>{
           let Component = route.component;
           if(route.component) {

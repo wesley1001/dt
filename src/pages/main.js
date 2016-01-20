@@ -6,6 +6,7 @@ import Swiper from 'react-native-swiper'
 
 var DataServices = require('../network');
 var Information = require('./information');
+var Person = require('../users/person');
 
 var {
   View,
@@ -42,33 +43,38 @@ var Main = React.createClass({
       .done();
   },
   renderInformation: function(information){
+    console.log(information)
     return (
       <TouchableHighlight 
         onPress={() => {
           this.props.navigator.push({
             title: information.title,
             component: Information,
-            passProps: {information_id: information.id}
+            params: {information_id: information.id}
           });
         }}>
         <View style={styles.list}>
-        <View style={styles.list_left}>
-          <Text style={styles.keyword_to_display}>{information.keyword_to_display}</Text>
-          <Text style={styles.title}>{information.title}</Text>
-          <Text style={styles.publish_at}>{Moment(information.publish_at).format("YYYY-MM-DD HH:mm")}</Text>
-        </View>
-        <Image 
-          source={{uri: information.thumbnail}} 
-          style={styles.list_right} 
-        />
+          <View style={styles.list_left}>
+            <Text style={styles.keyword_to_display}>{information.keyword_to_display}</Text>
+            <Text style={styles.title}>{information.title}</Text>
+            <Text style={styles.publish_at}>{Moment(information.publish_at).format("YYYY-MM-DD HH:mm")}</Text>
+          </View>
+          <View style={styles.list_right} >
+            <Image 
+              source={{uri: information.thumbnail}} 
+              style={styles.list_right_thumbnail} 
+            />
+            <View style={styles.paragraph_size}>
+              <Text style={styles.paragraph_size_text}>{information.paragraph_size}</Text>
+            </View>
+          </View>
         </View>
       </TouchableHighlight>
-      
     )
   },
-  render: function() {
+  renderHeader () {
+    var _this = this;
     return (
-      <View style={styles.container}>
         <Swiper 
           style={styles.wrapper} 
           showsButtons={false}
@@ -78,27 +84,55 @@ var Main = React.createClass({
           showsPagination={false}>
           {
             this.state.banners.map(function(banner,i){
-              console.log(banner)
+              var information_id = banner.url.split("/news/")[1];
               return (
-                <View key={i} style={styles.banner}>
-                  <Image 
-                    source={{uri: banner.image_url}}
-                    style={styles.banner_image}
-                  />
-                  <View style={styles.banner_text}>
-                    <View style={styles.keyword}>
-                      <Text style={styles.keyword_text}>{banner.keyword}</Text>
-                    </View>
-                    <View style={styles.banner_title}>
-                      <Text style={styles.banner_title_text}>{banner.title}</Text>
+                <TouchableHighlight 
+                  key={i}
+                  onPress={() => {
+                    _this.props.navigator.push({
+                      title: banner.title,
+                      component: Information,
+                      params: {information_id: information_id}
+                    });
+                  }}>
+                  <View style={styles.banner}>
+                    <Image 
+                      source={{uri: banner.image_url}}
+                      style={styles.banner_image}
+                    />
+                    <View style={styles.banner_text}>
+                      <View style={styles.keyword}>
+                        <Text style={styles.keyword_text}>{banner.keyword}</Text>
+                      </View>
+                      <View style={styles.banner_title}>
+                        <Text style={styles.banner_title_text}>{banner.title}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
+                </TouchableHighlight>
               );
             })
           }
         </Swiper>
+    );
+  },
+  render: function() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.nav}>
+          <TouchableHighlight 
+            onPress={() => {
+              this.props.navigator.push({
+                component: Person,
+              });
+            }}>
+            <View style={styles.person}>
+              <Text style={styles.person_text}>个人中心</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
         <ListView
+          renderHeader={this.renderHeader}
           dataSource={this.state.information_lists} 
           renderRow={this.renderInformation}
           style={styles.lists}
@@ -112,6 +146,27 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+  },
+  nav: {
+    position: 'absolute',
+    // flex:1,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    width: Dimensions.get('window').width,
+    // height:50,
+  },
+  person: {
+    // column:'red',
+    position: 'absolute',
+    right:0,
+    top:30,
+    paddingRight:10
+  },
+  person_text: {
+    // color: 'red'
+    fontSize:12,
+  },
+  wrapper:{
   },
   banner: {
   },
@@ -146,10 +201,12 @@ var styles = StyleSheet.create({
     fontSize: 18,
   },
   lists: {
+    marginTop:50,
     backgroundColor: 'eeeeee',
-    padding:10,
   },
   list: {
+    marginLeft:10,
+    marginRight:10,
     marginTop: 15,
     flex:1,
     height:120,
@@ -162,7 +219,7 @@ var styles = StyleSheet.create({
   },
   list_left: {
     padding:6,
-    width:Dimensions.get('window').width/2-10,
+    width:Dimensions.get('window').width/2,
     flex:1,
     flexDirection: 'column',
     justifyContent: 'space-between'
@@ -178,11 +235,32 @@ var styles = StyleSheet.create({
     fontSize:12,
   },
   list_right: {
-    height: 120,
     marginTop:-2,
     borderRadius:5,
-    width:Dimensions.get('window').width/2-10,
-  }
+    marginRight:-2,
+  },
+  list_right_thumbnail: {
+    borderRadius:5,
+    width:Dimensions.get('window').width/2,
+    height: 120,
+  },
+  paragraph_size:{
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    borderRadius:10,
+    top:10,
+    right: 10,
+    paddingLeft:6,
+    paddingTop:2,
+    backgroundColor: 'white'
+  },
+  paragraph_size_text:{
+    fontSize:14,
+    width:10,
+    height:14,
+    color:'rgba(194,127,22,0.8)',
+  },
 });
 
 module.exports = Main;

@@ -22,36 +22,42 @@ var Information = React.createClass({
     return {
       information: {},
       token: "",
+      loading: true,
     }
   },
-  componentDidMount: async function() {
-    try {
-      var token = await AsyncStorage.getItem("token");
-      var informations = await DataServices.getInformation(this.props.information_id, token);
-    } catch (error) {
-      console.log(error.message)
-    }
-    this.setState({
-      information: informations,
-      token: token,
+  componentDidMount: function() {
+    DataServices.getInformation(this.props.information_id, 'token')
+    .then( responseData => {
+      this.setState({
+        information: responseData,
+        loading: false,
+      });
     })
+    .done();
   },
   render: function() {
     console.log(this.state.information);
-    
+    if(this.state.loading){
+      return (
+        <View style={styles.loading}>
+          <Text style={styles.title}>加载中2</Text>
+        </View>
+      )
+    }
+
     return (
-      this.state.information.title
-      ?
       <ScrollView style={styles.container}>
         <View style={styles.recipe}>
           <Text style={styles.title}>{this.state.information.title}</Text>
           <Text style={styles.year}>{moment(this.state.information.publish_at).format("YYYY-MM-DD HH:mm:ss")}</Text>
-          
         </View>
-        <WebView automaticallyAdjustContentInsets={true} html={csss+this.state.information.content} style={styles.content} />
+        <WebView 
+          automaticallyAdjustContentInsets={true} 
+          html={csss+this.state.information.content} 
+          style={styles.content} 
+        />
       </ScrollView>
-      :
-      <View style={styles.loading}><Text style={styles.title}>.........</Text></View>
+      
     );
   },
 });

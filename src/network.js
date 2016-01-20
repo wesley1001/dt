@@ -24,7 +24,6 @@ var DataServices = {
 }
 
 function getBanners(){
-  // console.log('11111111111111')
   var url = `${SERVER}/banners`;
 
   return fetch(url, {
@@ -33,8 +32,6 @@ function getBanners(){
     }
   })
   .then((response) => {
-    // console.log(response)
-    // console.log('response')
     return response_date(response)
   })
 }
@@ -193,7 +190,13 @@ function getInformationList(channel_id){
 function getInformation(id, token){
   var url = `${SERVER}/information/${id}`;
   console.log(url);
-  return fetch(url, {headers: {"Accept-Version": "v2","Http-Authorization": token,}})
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+      // "Http-Authorization": token,
+      "UUID":"asdfghjkl;"
+    }
+  })
   .then((response) => {
     return response_date(response)
   })

@@ -1,32 +1,35 @@
 'use strict';
 
-import React from 'react-native'
-import Moment from 'moment'
-import Swiper from 'react-native-swiper'
-
-var DataServices = require('../network');
-var Information = require('./information');
-var Person = require('../users/person');
-
-var {
+import React, {
+  Component,
+  StyleSheet,
   View,
   Text,
-  StyleSheet,
   ScrollView,
   Dimensions,
-  TouchableHighlight,
+  TouchableOpacity,
   ListView,
   Image,
-} = React;
+} from 'react-native';
 
-var Main = React.createClass({
-  getInitialState() {
-    return {
+import Moment from 'moment'
+import Swiper from 'react-native-swiper'
+import DataServices from '../network';
+import Information from './information'
+import Person from '../users/person'
+import Option from '../users/option'
+
+class Main extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
       banners: [],
       information_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
      DataServices.getBanners()
       .then( responseData => {
         this.setState({
@@ -41,16 +44,15 @@ var Main = React.createClass({
         });
       })
       .done();
-  },
-  renderInformation: function(information){
-    console.log(information)
+  }
+  renderInformation(information){
     return (
-      <TouchableHighlight 
+      <TouchableOpacity 
         onPress={() => {
           this.props.navigator.push({
             title: information.title,
             component: Information,
-            params: {information_id: information.id}
+            passProps: {information_id: information.id}
           });
         }}>
         <View style={styles.list}>
@@ -69,102 +71,99 @@ var Main = React.createClass({
             </View>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     )
-  },
-  renderHeader () {
-    var _this = this;
+  }
+
+  renderHeader() {
     return (
-        <Swiper 
-          style={styles.wrapper} 
-          showsButtons={false}
-          autoplay={true}
-          autoplayTimeout={5}
-          height={300}
-          showsPagination={false}>
-          {
-            this.state.banners.map(function(banner,i){
-              var information_id = banner.url.split("/news/")[1];
-              return (
-                <TouchableHighlight 
-                  key={i}
-                  onPress={() => {
-                    _this.props.navigator.push({
-                      title: banner.title,
-                      component: Information,
-                      params: {information_id: information_id}
-                    });
-                  }}>
-                  <View style={styles.banner}>
-                    <Image 
-                      source={{uri: banner.image_url}}
-                      style={styles.banner_image}
-                    />
-                    <View style={styles.banner_text}>
-                      <View style={styles.keyword}>
-                        <Text style={styles.keyword_text}>{banner.keyword}</Text>
-                      </View>
-                      <View style={styles.banner_title}>
-                        <Text style={styles.banner_title_text}>{banner.title}</Text>
-                      </View>
+      <Swiper 
+        style={styles.wrapper} 
+        showsButtons={false}
+        autoplay={true}
+        autoplayTimeout={5}
+        height={300}
+        showsPagination={false}>
+        {
+          this.state.banners.map((banner, i) => {
+            var information_id = banner.url.split("/news/")[1];
+            return (
+              <TouchableOpacity 
+                key={i}
+                onPress={() => {
+                  this.props.navigator.push({
+                    title: banner.title,
+                    component: Information,
+                    rightButtonTitle: '个人中心',
+                    onRightButtonPress: () => {
+                      this.props.navigator.push({
+                        title: '个人中心',
+                        component: Person,
+                        rightButtonTitle: '设置',
+                        onRightButtonPress: () => {
+                          this.props.navigator.push({
+                            title: '设置',
+                            component: Option,
+                          })
+                        },
+                      })
+                    },
+                    passProps: {information_id: information_id}
+                  });
+                }}>
+                <View style={styles.banner}>
+                  <Image 
+                    source={{uri: banner.image_url}}
+                    style={styles.banner_image}
+                  />
+                  <View style={styles.banner_text}>
+                    <View style={styles.keyword}>
+                      <Text style={styles.keyword_text}>{banner.keyword}</Text>
+                    </View>
+                    <View style={styles.banner_title}>
+                      <Text style={styles.banner_title_text}>{banner.title}</Text>
                     </View>
                   </View>
-                </TouchableHighlight>
-              );
-            })
-          }
-        </Swiper>
+                </View>
+              </TouchableOpacity>
+            );
+          })
+        }
+      </Swiper>
     );
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <View style={styles.container}>
-        <View style={styles.nav}>
-          <TouchableHighlight 
-            onPress={() => {
-              this.props.navigator.push({
-                component: Person,
-              });
-            }}>
-            <View style={styles.person}>
-              <Text style={styles.person_text}>个人中心</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.navigator.push({
+              component: Person,
+            });
+          }}>
+          <View style={styles.person}>
+            <Text>个人中心</Text>
+          </View>
+        </TouchableOpacity>
         <ListView
-          renderHeader={this.renderHeader}
+          renderHeader={(this.renderHeader).bind(this)}
           dataSource={this.state.information_lists} 
-          renderRow={this.renderInformation}
+          renderRow={this.renderInformation.bind(this)}
           style={styles.lists}
         />
       </View>
     )
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
   },
-  nav: {
-    position: 'absolute',
-    // flex:1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    width: Dimensions.get('window').width,
-    // height:50,
-  },
   person: {
-    // column:'red',
     position: 'absolute',
-    right:0,
-    top:30,
-    paddingRight:10
-  },
-  person_text: {
-    // color: 'red'
-    fontSize:12,
   },
   wrapper:{
   },
@@ -201,7 +200,6 @@ var styles = StyleSheet.create({
     fontSize: 18,
   },
   lists: {
-    marginTop:50,
     backgroundColor: 'eeeeee',
   },
   list: {
@@ -263,4 +261,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Main;
+export default Main;

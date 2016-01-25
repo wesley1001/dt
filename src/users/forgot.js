@@ -30,7 +30,6 @@ var UserRegister = React.createClass({
         });
       })
       .done();
-    console.log(this.state.result);
   },
   _handleGetCode(event){
     DataServices.GetCode(this.state.telephone, 'forget_password')

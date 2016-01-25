@@ -14,6 +14,7 @@ var DataServices = {
   'getBanners': getBanners,
   'getBlocks': getBlocks,
   'getInformationList': getInformationList,
+  'getRealtedInformations': getRealtedInformations,
   'getInformation': getInformation,
   'getHistoryHotestInformation': getHistoryHotestInformation,
   'getInformationByDate': getInformationByDate,
@@ -21,6 +22,16 @@ var DataServices = {
   'Forgot': Forgot,
   'UserLogin': UserLogin,
   'GetCode': GetCode,
+}
+
+function getRealtedInformations(information_id){
+  var url = `${SERVER}/information/${information_id}/recommendations?per=6`;
+  return fetch(url, {headers: {
+    "Accept-Version": "v2",
+  }})
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 function getBanners(){
@@ -68,7 +79,6 @@ function GetCode(telephone, event){
 }
 
 function response_date(response){
-  console.log(response.status)
   if(response.status > 400 && response.status < 500){
     Alert.alert(
       JSON.parse(response._bodyInit).message,
@@ -84,7 +94,6 @@ function response_date(response){
 
 function UserLogin(telephone, password){
   var url = `${SERVER}/user_session`;
-  console.log(telephone+":"+password);
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",
@@ -99,14 +108,12 @@ function UserLogin(telephone, password){
     })
   })
   .then((response) => {
-    console.log(response.status);
     return response_date(response)
   })
 }
 
 function Register(telephone, password, code){
   var url = `${SERVER}/user`;
-  console.log(telephone+password);
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",
@@ -128,7 +135,6 @@ function Register(telephone, password, code){
 
 function Forgot(telephone, password, code){
   var url = `${SERVER}/user/reset_password`;
-  console.log(telephone+password);
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",
@@ -144,7 +150,6 @@ function Forgot(telephone, password, code){
     })
   })
   .then((response) => {
-    console.log(response.status)
     return response_date(response)
   })
 }
@@ -152,8 +157,16 @@ function Forgot(telephone, password, code){
 function getHistoryHotestInformation(channel_id){
   var max = 5;
   var channel_id = 'app';
-  var url = `${SERVER}/information/history?channel_id=${channel_id}&max=${max}`;
 
+  var upto = new Date();
+  var from_time = upto - 7 * 24 * 3600 * 1000;
+  // var upto = new Date();
+  upto = upto.getTime() / 1000;
+  from_time = from_time / 1000;
+
+  var url = `${SERVER}/information/history?channel_id=${channel_id}&max=${max}&from=${from_time}&upto=${upto}`;
+
+  console.log(url);
   return fetch(url, {headers: {
     "Accept-Version": "v2",
     "Http-Authorization": "clvTFGghfLFeWVnJE4FLjz42t_9ssitH8VaXjnFitUXBw_OjAGhH_VkU4sYcB_cKjxHePHEAucpYfGjy7esdpLq_SKKKkqLm8mS8wr4BZJ9kG5gCZXYkI1NyFTIR2pau",
@@ -165,6 +178,7 @@ function getHistoryHotestInformation(channel_id){
 
 function getInformationByDate(date){
   var channel_id = 'app';
+
   var url = `${SERVER}/information/daily?date=${date}&channel_id=${channel_id}`;
 
   return fetch(url, {headers: {
@@ -189,7 +203,6 @@ function getInformationList(channel_id){
 
 function getInformation(id, token){
   var url = `${SERVER}/information/${id}`;
-  console.log(url);
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",

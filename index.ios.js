@@ -1,66 +1,45 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
-var React = require('react-native');
-var MainPage = require('./src/pages/main');
-
-
-var {
+import React, {
   AppRegistry,
-  Navigator,
+  Component,
+  NavigatorIOS,
   StyleSheet,
   View,
+  AlertIOS,
   Text,
-} = React;
+} from 'react-native';
 
-var dt = React.createClass({
-  getInitialState() {
-    return {
-      loaded: true
-    }
-  },
-  renderLoadingView: function() {
+import MainPage from './src/pages/main';
+import Person from './src/users/person'
+
+class dt extends Component {
+  constructor(props){
+    super(props)
+  }
+
+  render() {
+    // if (!this.state.loading) {
+    //   return this.renderLoadingView();
+    // }
     return (
-      <View style={styles.container2}>
-        <Text>
-          Loading movies...
-        </Text>
-      </View>
-    );
-  },
-  render: function() {
-    if (!this.state.loaded) {
-      return this.renderLoadingView();
-    }
-    return (
-      <Navigator
-        initialRoute={{name: 'My First Scene', component: MainPage}}
-        // configureScene={() => {
-        //   return Navigator.SceneConfigs.VerticalDownSwipeJump;
-        // }}
-        renderScene={(route, navigator) =>{
-          let Component = route.component;
-          if(route.component) {
-            return <Component {...route.params} navigator={navigator} />
-          }
+      <NavigatorIOS
+        style={styles.container}
+        shadowHidden={false}
+        initialRoute={{
+          component: MainPage,
+          title: '首页',
         }}
       />
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  container2:{
-    flex:1,
-    top:100,
-  }
 });
 
 AppRegistry.registerComponent('dt', () => dt);

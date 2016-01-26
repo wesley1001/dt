@@ -2,6 +2,7 @@
 
 // var SERVER = 'http://121.43.181.142:8079/api';
 // var SERVER = 'http://127.0.0.1:3000/api';
+// var SERVER = 'http://172.16.0.39:3000/api';
 // var SERVER = 'http://192.168.31.244:3000/api';
 var SERVER = 'http://dtcj.com/api';
 
@@ -22,6 +23,27 @@ var DataServices = {
   'Forgot': Forgot,
   'UserLogin': UserLogin,
   'GetCode': GetCode,
+  'ThirdLogin': ThirdLogin
+}
+
+function ThirdLogin(uid, register_type) {
+  var url = `${SERVER}/user_session/third`;
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+      "Content-Type": "application/json",
+    }, 
+    method: 'POST',
+    body: JSON.stringify({
+      register_type: register_type,
+      user: {
+        uid: uid
+      },
+    })
+  })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 function getRealtedInformations(information_id){
@@ -84,7 +106,10 @@ function response_date(response){
       JSON.parse(response._bodyInit).message,
     )
   }else if(response.status >= 500){
-    throw "34567890-"
+    // Alert.alert(
+    //   JSON.parse(response._bodyInit).message,
+    // )
+    throw response
   }else{
     return response.json().then((responseData) => {
       return responseData.data;

@@ -14,6 +14,8 @@
 // #import "RCTWeChat.h"
 #import "../Libraries/LinkingIOS/RCTLinkingManager.h"
 
+#import "RCTWeChat.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -60,17 +62,38 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  return [RCTLinkingManager application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+  NSString *myString = [url absoluteString];
+  
+  NSString *abc = [myString substringToIndex:2];
+  
+//  NSString *aa = @""
+  
+  NSLog(@"gggggg:%@", abc);
+  
+  if ([abc isEqual:@"wx"]) {
+     return [[RCTWeChat shareInstance] handleOpenURL: url];
+  } else {
+//    <#statements#>
+    return [RCTLinkingManager application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+  }
+//  return [RCTLinkingManager application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
-// - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-// {
-//   return [[RCTWeChat shareInstance] handleOpenURL: url];
-// }
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+  return [[RCTWeChat shareInstance] handleOpenURL: url];
+}
+
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//  NSLog(@"字符串1:%@",url);
+//  // 字符串1:tencent1104763085://qzapp/mqzone/0?generalpastboard=1
+//  return [RCTLinkingManager application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+//}
 
 // - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//   NSLog(@"字符串2:%@",url);
+// 字符串2:wx631251a8924fcd56://oauth?code=0210f583010b0e422e2ed609da31a1cz&state=wechat_sdk_test
 //   return [[RCTWeChat shareInstance] handleOpenURL: url];
-  
 // }
 
 @end

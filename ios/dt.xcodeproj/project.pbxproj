@@ -27,6 +27,9 @@
 		CBDCE1521C5710200088950C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE1511C5710200088950C /* libsqlite3.tbd */; };
 		CBDCE1541C57103B0088950C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE1531C57103B0088950C /* libc++.tbd */; };
 		CBDCE1561C57104A0088950C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE1551C57104A0088950C /* libz.tbd */; };
+		CBDCE15E1C587B690088950C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE15D1C587B690088950C /* SystemConfiguration.framework */; };
+		CBDCE1601C587B710088950C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE15F1C587B710088950C /* CoreTelephony.framework */; };
+		CBDCE1961C58E13C0088950C /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE1951C58DFB20088950C /* libRCTWeChat.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +117,13 @@
 			remoteGlobalIDString = 9139321C1C232D310085E3BA;
 			remoteInfo = RCTQQAPI;
 		};
+		CBDCE1941C58DFB20088950C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBDCE1901C58DFB20088950C /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D38ECF511C192AC800BDD8AE;
+			remoteInfo = RCTWeChat;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +153,9 @@
 		CBDCE1511C5710200088950C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		CBDCE1531C57103B0088950C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		CBDCE1551C57104A0088950C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		CBDCE15D1C587B690088950C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CBDCE15F1C587B710088950C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		CBDCE1901C58DFB20088950C /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat-ios/RCTWeChat/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +170,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBDCE1961C58E13C0088950C /* libRCTWeChat.a in Frameworks */,
+				CBDCE1601C587B710088950C /* CoreTelephony.framework in Frameworks */,
+				CBDCE15E1C587B690088950C /* SystemConfiguration.framework in Frameworks */,
 				CBDCE1561C57104A0088950C /* libz.tbd in Frameworks */,
 				CBDCE1541C57103B0088950C /* libc++.tbd in Frameworks */,
 				CBDCE1521C5710200088950C /* libsqlite3.tbd in Frameworks */,
@@ -284,6 +300,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CBDCE1901C58DFB20088950C /* RCTWeChat.xcodeproj */,
 				CBDCE1481C570FF90088950C /* RCTQQAPI.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -310,6 +327,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CBDCE15F1C587B710088950C /* CoreTelephony.framework */,
+				CBDCE15D1C587B690088950C /* SystemConfiguration.framework */,
 				CBDCE1551C57104A0088950C /* libz.tbd */,
 				CBDCE1531C57103B0088950C /* libc++.tbd */,
 				CBDCE1511C5710200088950C /* libsqlite3.tbd */,
@@ -336,6 +355,14 @@
 			isa = PBXGroup;
 			children = (
 				CBDCE14D1C570FF90088950C /* libRCTQQAPI.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CBDCE1911C58DFB20088950C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBDCE1951C58DFB20088950C /* libRCTWeChat.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,6 +477,10 @@
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
 				},
 				{
+					ProductGroup = CBDCE1911C58DFB20088950C /* Products */;
+					ProjectRef = CBDCE1901C58DFB20088950C /* RCTWeChat.xcodeproj */;
+				},
+				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
@@ -538,6 +569,13 @@
 			fileType = archive.ar;
 			path = libRCTQQAPI.a;
 			remoteRef = CBDCE14C1C570FF90088950C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBDCE1951C58DFB20088950C /* libRCTWeChat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWeChat.a;
+			remoteRef = CBDCE1941C58DFB20088950C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -667,8 +705,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"/Users/guyifeng/workspace/dt/node_modules/react-native/React/**",
-					"/Users/guyifeng/Downloads/react-native-wechat-ios-master/RCTWeChat/**",
+					"$(SRCROOT)/../node_modules/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat-ios/RCTWeChat/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios/**",
 				);
 				INFOPLIST_FILE = dt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -696,8 +735,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"/Users/guyifeng/workspace/dt/node_modules/react-native/React/**",
-					"/Users/guyifeng/Downloads/react-native-wechat-ios-master/RCTWeChat/RCTWeChat/**",
+					"$(SRCROOT)/../node_modules/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat-ios/RCTWeChat/**",
 				);
 				INFOPLIST_FILE = dt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {
+  NativeAppEventEmitter,
   Component,
   StyleSheet,
   TextInput,
@@ -11,6 +12,7 @@ import React, {
   TouchableOpacity,
   ListView,
   Image,
+  AlertIOS,
 } from 'react-native';
 
 import Moment from 'moment'
@@ -24,6 +26,57 @@ import QrqmList from '../pages/qrqm'
 import '../storage'
 
 import * as QQAPI from 'react-native-qq22';
+
+import WeChat from 'react-native-wechat-ios';
+
+// var WeChat = require('react-native-wechat22');
+
+NativeAppEventEmitter.addListener(
+  'didRecvAuthResponse',
+  (response) => {
+    // console.log(JSON.stringify(response));
+    console.log(typeof response);
+    var code = response
+
+    console.log(code);
+
+    DataServices.Wechat(code.code)
+      .then( responseDatad => {
+        console.log(responseDatad)
+        DataServices.ThirdLogin(responseDatad.openid, 'qq')
+          .then( responseData => {
+            try{
+              global.storage.save({
+                key: 'user',  //注意:请不要在key中使用_下划线符号!
+                rawData: { 
+                  user_name: responseData.name,
+                  user_avatar: responseData.avatar,
+                  token: responseData.auth_token,
+                },
+
+                //如果不指定过期时间，则会使用defaultExpires参数
+                //如果设为null，则永不过期
+                expires: 1000 * 3600
+              });
+            }catch(e){
+              console.log(e)
+            }
+
+            console.log(responseData)
+            
+            this.setState({
+              user_name: responseData.name,
+              user_avatar: responseData.avatar,
+              token: responseData.auth_token,
+            })
+
+            console.log('okkoookokok')
+          })
+      })
+  }
+);
+
+// DataServices.ThirdLogin(response.openid, 'qq')
 
 class Person extends Component {
   constructor(props){
@@ -108,6 +161,7 @@ class Person extends Component {
             onPress={() => {
               QQAPI.login('get_simple_userinfo')
                 .then((response) => {
+                  console.log(response)
                   DataServices.ThirdLogin(response.openid, 'qq')
                     .then( responseData => {
                       try{
@@ -141,9 +195,30 @@ class Person extends Component {
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => {
+              
+              // 向微信注册应用ID
+              WeChat.registerApp('wx631251a8924fcd56', (res) => {
+                  // alert(res); // true or false
+                  console.log('registerApp= '+ res)
+              });
+
+              WeChat.isWXAppInstalled((res) => {
+                  // alert('isWXAppInstalled: '+res); // true or false
+                  console.log('isWXAppInstalled= '+ res)
+              });
+
+              let scope = 'snsapi_userinfo';
+              let state = 'wechat_sdk_test'; 
+              WeChat.sendAuthReq(scope, state, (res) => {
+                  // alert(res); // true or false
+                  console.log('sendAuthReq= '+ res)
+              });
+
+
+                  
             }}>
             <View style={styles.person}>
-              <Text>支付宝登录</Text>
+              <Text>微信登录</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -152,6 +227,7 @@ class Person extends Component {
   }
 
   render() {
+    // console.log(WeChat);
     // console.log("token= "+ this.state.token);
     return (
       <View style={styles.container}>

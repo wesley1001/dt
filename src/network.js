@@ -23,10 +23,26 @@ var DataServices = {
   'Forgot': Forgot,
   'UserLogin': UserLogin,
   'GetCode': GetCode,
-  'ThirdLogin': ThirdLogin
+  'ThirdLogin': ThirdLogin,
+  'Wechat': Wechat,
+}
+
+// https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+
+function Wechat(code){
+  var url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx631251a8924fcd56&secret=304dfdc281dac38b82384afbf693a4a9&code=${code}&grant_type=authorization_code`;
+  console.log(url);
+  return fetch(url)
+  .then((response) => {
+    return response.json().then((responseData) => {
+      return responseData;
+    });
+  })
 }
 
 function ThirdLogin(uid, register_type) {
+  console.log(uid)
+  console.log(register_type)
   var url = `${SERVER}/user_session/third`;
   return fetch(url, {
     headers: {
@@ -42,6 +58,8 @@ function ThirdLogin(uid, register_type) {
     })
   })
   .then((response) => {
+    console.log("jjjjj----")
+    console.log(response)
     return response_date(response)
   })
 }

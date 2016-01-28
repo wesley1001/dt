@@ -25,6 +25,8 @@ var DataServices = {
   'GetCode': GetCode,
   'ThirdLogin': ThirdLogin,
   'Wechat': Wechat,
+  'QqSimpleUserinfo': QqSimpleUserinfo,
+  'WechatSimpleUserinfo': WechatSimpleUserinfo,
 }
 
 // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
@@ -40,7 +42,32 @@ function Wechat(code){
   })
 }
 
-function ThirdLogin(uid, register_type) {
+function QqSimpleUserinfo(access_token, oauth_consumer_key, openid){
+  var url = `https://graph.qq.com/user/get_simple_userinfo?access_token=${access_token}&oauth_consumer_key=${oauth_consumer_key}&openid=${openid}&format=json`;
+  console.log(url);
+  return fetch(url)
+  .then((response) => {
+    return response.json().then((responseData) => {
+      return responseData;
+    });
+  })
+}
+
+function WechatSimpleUserinfo(access_token, openid){
+  var url = `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}`;
+  // var url = `https://api.weixin.qq.com/sns/auth?access_token=${access_token}&openid=${openid}`;
+  console.log(url);
+  return fetch(url)
+  .then((response) => {
+    return response.json().then((responseData) => {
+      return responseData;
+    });
+  })
+}
+
+// https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&openid=OPENID
+
+function ThirdLogin(uid, name, avatar, register_type) {
   // console.log(uid)
   // console.log(register_type)
   var url = `${SERVER}/user_session/third`;
@@ -53,7 +80,9 @@ function ThirdLogin(uid, register_type) {
     body: JSON.stringify({
       register_type: register_type,
       user: {
-        uid: uid
+        uid: uid,
+        name: name,
+        avatar: avatar
       },
     })
   })
@@ -88,6 +117,8 @@ function getBanners(){
 function getBlocks(){
   var url = `${SERVER}/blocks`;
 
+  console.log('1289092128932')
+  console.log(url);
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",

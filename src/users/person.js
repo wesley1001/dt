@@ -46,33 +46,33 @@ class Person extends Component {
     NativeAppEventEmitter.addListener(
       'didRecvAuthResponse',
       (response) => {
-        var code = response
+        DataServices.Wechat(response.code)
+        .then( responseDatad => {
+          return DataServices.WechatSimpleUserinfo(responseDatad.access_token, responseDatad.openid)
+        })
+        .then(responseData => {
+          return DataServices.ThirdLogin(responseData.openid, responseData.nickname, responseData.headimgurl, 'qq')
+        })
+        .then( responseDatax => {
+          try{
+            global.storage.save({
+              key: 'user',  //注意:请不要在key中使用_下划线符号!
+              rawData: { 
+                user_name: responseDatax.name,
+                user_avatar: responseDatax.avatar,
+                token: responseDatax.auth_token,
+              },
 
-        DataServices.Wechat(code.code)
-          .then( responseDatad => {
+              //如果不指定过期时间，则会使用defaultExpires参数
+              //如果设为null，则永不过期
+              expires: 1000 * 3600
+            });
+          }catch(e){
+            console.log(e)
+          }
 
-            DataServices.ThirdLogin(responseDatad.openid, 'qq')
-              .then( responseData => {
-                try{
-                  global.storage.save({
-                    key: 'user',  //注意:请不要在key中使用_下划线符号!
-                    rawData: { 
-                      user_name: responseData.name,
-                      user_avatar: responseData.avatar,
-                      token: responseData.auth_token,
-                    },
-
-                    //如果不指定过期时间，则会使用defaultExpires参数
-                    //如果设为null，则永不过期
-                    expires: 1000 * 3600
-                  });
-                }catch(e){
-                  console.log(e)
-                }
-
-                this.props.navigator.popN(2)
-              })
-          })
+          this.props.navigator.popN(2)
+        })
       }
     );
 
@@ -147,30 +147,35 @@ class Person extends Component {
               QQAPI.login('get_simple_userinfo')
                 .then((response) => {
                   console.log(response)
-                  DataServices.ThirdLogin(response.openid, 'qq')
+                  DataServices.QqSimpleUserinfo(response.access_token, response.oauth_consumer_key, response.openid)
                     .then( responseData => {
-                      try{
-                        global.storage.save({
-                          key: 'user',  //注意:请不要在key中使用_下划线符号!
-                          rawData: { 
+                      console.log(responseData)
+
+                      DataServices.ThirdLogin(response.openid, responseData.nickname, responseData.figureurl_qq_2, 'qq')
+                        .then( responseData => {
+                          try{
+                            global.storage.save({
+                              key: 'user',  //注意:请不要在key中使用_下划线符号!
+                              rawData: { 
+                                user_name: responseData.name,
+                                user_avatar: responseData.avatar,
+                                token: responseData.auth_token,
+                              },
+
+                              //如果不指定过期时间，则会使用defaultExpires参数
+                              //如果设为null，则永不过期
+                              expires: 1000 * 3600
+                            });
+                          }catch(e){
+                            console.log(e)
+                          }
+                          
+                          this.setState({
                             user_name: responseData.name,
                             user_avatar: responseData.avatar,
                             token: responseData.auth_token,
-                          },
-
-                          //如果不指定过期时间，则会使用defaultExpires参数
-                          //如果设为null，则永不过期
-                          expires: 1000 * 3600
-                        });
-                      }catch(e){
-                        console.log(e)
-                      }
-                      
-                      this.setState({
-                        user_name: responseData.name,
-                        user_avatar: responseData.avatar,
-                        token: responseData.auth_token,
-                      })
+                          })
+                        })
                     })
                 })
             }}>

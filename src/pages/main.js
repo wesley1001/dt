@@ -99,6 +99,9 @@ class Main extends Component {
                       this.props.navigator.push({
                         title: '个人中心',
                         component: Person,
+                        passProps: {
+                          global_token: global,
+                        },
                         rightButtonTitle: '设置',
                         onRightButtonPress: () => {
                           this.props.navigator.push({

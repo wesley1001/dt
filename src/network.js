@@ -33,7 +33,6 @@ var DataServices = {
 
 function Wechat(code){
   var url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx631251a8924fcd56&secret=304dfdc281dac38b82384afbf693a4a9&code=${code}&grant_type=authorization_code`;
-  // console.log(url);
   return fetch(url)
   .then((response) => {
     return response.json().then((responseData) => {
@@ -44,7 +43,6 @@ function Wechat(code){
 
 function QqSimpleUserinfo(access_token, oauth_consumer_key, openid){
   var url = `https://graph.qq.com/user/get_simple_userinfo?access_token=${access_token}&oauth_consumer_key=${oauth_consumer_key}&openid=${openid}&format=json`;
-  console.log(url);
   return fetch(url)
   .then((response) => {
     return response.json().then((responseData) => {
@@ -56,7 +54,6 @@ function QqSimpleUserinfo(access_token, oauth_consumer_key, openid){
 function WechatSimpleUserinfo(access_token, openid){
   var url = `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}`;
   // var url = `https://api.weixin.qq.com/sns/auth?access_token=${access_token}&openid=${openid}`;
-  console.log(url);
   return fetch(url)
   .then((response) => {
     return response.json().then((responseData) => {
@@ -68,8 +65,6 @@ function WechatSimpleUserinfo(access_token, openid){
 // https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&openid=OPENID
 
 function ThirdLogin(uid, name, avatar, register_type) {
-  // console.log(uid)
-  // console.log(register_type)
   var url = `${SERVER}/user_session/third`;
   return fetch(url, {
     headers: {
@@ -116,9 +111,6 @@ function getBanners(){
 
 function getBlocks(){
   var url = `${SERVER}/blocks`;
-
-  console.log('1289092128932')
-  console.log(url);
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",
@@ -238,7 +230,6 @@ function getHistoryHotestInformation(channel_id){
 
   var url = `${SERVER}/information/history?channel_id=${channel_id}&max=${max}&from=${from_time}&upto=${upto}`;
 
-  console.log(url);
   return fetch(url, {headers: {
     "Accept-Version": "v2",
     "Http-Authorization": "clvTFGghfLFeWVnJE4FLjz42t_9ssitH8VaXjnFitUXBw_OjAGhH_VkU4sYcB_cKjxHePHEAucpYfGjy7esdpLq_SKKKkqLm8mS8wr4BZJ9kG5gCZXYkI1NyFTIR2pau",

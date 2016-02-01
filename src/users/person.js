@@ -71,7 +71,7 @@ class Person extends Component {
             console.log(e)
           }
 
-          this.props.navigator.popN(2)
+          this.props.navigator.pop()
         })
       }
     );
@@ -117,7 +117,7 @@ class Person extends Component {
             source={{uri: this.state.user_avatar || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} 
             style={styles.avatar}
           />
-          <Text>{this.state.user_name}222</Text>
+          <Text>{this.state.user_name}</Text>
 
         </TouchableOpacity>
         
@@ -146,10 +146,8 @@ class Person extends Component {
             onPress={() => {
               QQAPI.login('get_simple_userinfo')
                 .then((response) => {
-                  console.log(response)
                   DataServices.QqSimpleUserinfo(response.access_token, response.oauth_consumer_key, response.openid)
                     .then( responseData => {
-                      console.log(responseData)
 
                       DataServices.ThirdLogin(response.openid, responseData.nickname, responseData.figureurl_qq_2, 'qq')
                         .then( responseData => {

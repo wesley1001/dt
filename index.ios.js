@@ -10,8 +10,9 @@ import React, {
   Text,
 } from 'react-native';
 
-import MainPage from './src/pages/main';
+import MainPage from './src/pages/main'
 import Person from './src/users/person'
+import Option from './src/users/option'
 
 class dt extends Component {
   constructor(props){
@@ -19,16 +20,28 @@ class dt extends Component {
   }
 
   render() {
-    // if (!this.state.loading) {
-    //   return this.renderLoadingView();
-    // }
     return (
       <NavigatorIOS
+        ref="nav"
         style={styles.container}
         shadowHidden={false}
         initialRoute={{
           component: MainPage,
           title: '首页',
+          rightButtonTitle: '个人中心',
+          onRightButtonPress: () => {
+            this.refs.nav.push({
+              title: '个人中心',
+              component: Person,
+              rightButtonTitle: '设置',
+              onRightButtonPress: () => {
+                this.refs.nav.push({
+                  title: '设置',
+                  component: Option,
+                })
+              },
+            })
+          }
         }}
       />
     );

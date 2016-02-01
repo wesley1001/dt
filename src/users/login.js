@@ -21,11 +21,6 @@ var {
 
 var UserLogin = React.createClass({
   getInitialState() {
-    // console.log('1234567890')
-    // QQAPI.login('get_simple_userinfo')
-    // console.log('1234567890')
-    // console.log(QQAPI.login('get_simple_userinfo'))
-
     return {
       telephone: "15201991025",
       password: "12345678",

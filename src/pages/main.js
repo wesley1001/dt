@@ -16,7 +16,7 @@ import Moment from 'moment'
 import Swiper from 'react-native-swiper'
 import DataServices from '../network';
 import Information from './information'
-import Person from '../users/person'
+
 import Option from '../users/option'
 
 class Main extends Component {
@@ -94,23 +94,6 @@ class Main extends Component {
                   this.props.navigator.push({
                     title: banner.title,
                     component: Information,
-                    rightButtonTitle: '个人中心',
-                    onRightButtonPress: () => {
-                      this.props.navigator.push({
-                        title: '个人中心',
-                        component: Person,
-                        passProps: {
-                          global_token: global,
-                        },
-                        rightButtonTitle: '设置',
-                        onRightButtonPress: () => {
-                          this.props.navigator.push({
-                            title: '设置',
-                            component: Option,
-                          })
-                        },
-                      })
-                    },
                     passProps: {information_id: information_id}
                   });
                 }}>

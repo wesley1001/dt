@@ -25,7 +25,7 @@ import QrqmList from '../pages/qrqm'
 
 import '../storage'
 
-import * as QQAPI from 'react-native-qq22';
+import * as QQAPI from 'react-native-qq';
 
 import WeChat from 'react-native-wechat-ios';
 
@@ -42,7 +42,6 @@ class Person extends Component {
   }
 
   componentDidMount() {
-
     NativeAppEventEmitter.addListener(
       'didRecvAuthResponse',
       (response) => {
@@ -85,10 +84,9 @@ class Person extends Component {
       //syncInBackground(默认为true)意味着如果数据过期，
       //在调用同步方法的同时先返回已经过期的数据。
       //设置为false的话，则始终强制返回同步方法提供的最新数据(当然会需要更多等待时间)。
-      syncInBackground: true
+      syncInBackground: false
     }).then( ret => {
       //如果找到数据，则在then方法中返回
-
       this.setState({
         user_name: ret.user_name,
         user_avatar: ret.user_avatar,
@@ -96,9 +94,12 @@ class Person extends Component {
       })
 
     }).catch( err => {
+      if(err == undefined){
+        // 未存内容，未登录
+        console.log(err);
+      }
       //如果没有找到数据且没有同步方法，
       //或者有其他异常，则在catch中返回
-      console.warn(err);
     })
   }
 

@@ -39,7 +39,6 @@ var UserRegister = React.createClass({
         });
       })
       .done();
-    console.log(this.state.code);
   },
   render: function() {
     return (

@@ -25,24 +25,21 @@ var resultsCache = {
   total:0,
 };
 
-class Qrqm extends Component {
+class Search extends Component {
   constructor(props){
     super(props)
 
     this.state = {
       information_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
+
   }
 
   componentDidMount() {
-    DataServices.getInformationList(this.props.channel_id)
-      .then( responseData => {
-        resultsCache.data = responseData;
-        this.setState({
-          information_lists: this.state.information_lists.cloneWithRows(responseData)
-        });
-      })
-      .done();
+    this.setState({
+      // information_lists: this.props.information_lists.cloneWithRows(responseData)
+      information_lists: this.state.information_lists.cloneWithRows(this.props.information_lists)
+    });
   }
 
   _renderRow(title: string, onPress: Function) {
@@ -191,4 +188,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default Qrqm;
+export default Search;

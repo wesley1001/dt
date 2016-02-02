@@ -1,64 +1,39 @@
 'use strict';
-
-var React = require('react-native');
-var DataServices = require('../network');
-
-var {
-  View,
-  Text,
+import React, {
+  AppRegistry,
+  Component,
+  Dimensions,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
+  Text,
   TouchableHighlight,
-} = React;
+  View
+} from 'react-native';
 
-var Option = React.createClass({
-  getInitialState() {
-    return {
-    }
-  },
-  componentDidMount: function() {
-  },
-  _pressButton() {
-    this.props.navigator.pop()
-  },
-  render: function() {
+import DataServices from '../network';
+import SearchBar from 'react-native-search-bar';
+
+class Option extends Component {
+  render() {
     return (
       <View style={styles.container}>
-        <View style={styles.nav}>
-          <View>
-            <TouchableOpacity 
-              onPress={this._pressButton}
-              >
-              <Text style={styles.back}>返回</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.title}>
-            <Text>设置</Text>
-          </View>
-          <View style={styles.title}>
-            <Text></Text>
-          </View>
-        </View>
+        <SearchBar
+        ref='searchBar'
+        placeholder='Search'
+        // barTintColor='red'
+        // onChangeText={...}
+        // onSearchButtonPress={...}
+        // onCancelButtonPress={...}
+        />
       </View>
-    );
-  },
-});
+    )
+  }
+}
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
+    marginTop: 70,
   },
-  nav: {
-    marginTop:20,
-    height: 36,
-    // backgroundColor: 'red',
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:10,
-    borderWidth:1,
-  },
-  
 });
 
-module.exports = Option;
+export default Option;

@@ -27,9 +27,20 @@ var DataServices = {
   'Wechat': Wechat,
   'QqSimpleUserinfo': QqSimpleUserinfo,
   'WechatSimpleUserinfo': WechatSimpleUserinfo,
+  'GetSearchInformation': GetSearchInformation,
 }
 
 // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+
+function GetSearchInformation(query){
+  var url = `${SERVER}/information/searches?query=${query}`;
+  return fetch(url, {headers: {
+    "Accept-Version": "v2",
+  }})
+  .then((response) => {
+    return response_date(response)
+  })
+}
 
 function Wechat(code){
   var url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx631251a8924fcd56&secret=304dfdc281dac38b82384afbf693a4a9&code=${code}&grant_type=authorization_code`;

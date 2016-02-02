@@ -48,14 +48,12 @@ var UserLogin = React.createClass({
     }
   },
   _forgot() {
-    console.log('forget');
     this.props.navigator.push({
       title: '重置密码',
       component: UserForgot,
     });
   },
   _register() {
-    console.log('register');
     this.props.navigator.push({
       title: '手机注册',
       component: UserRegister,

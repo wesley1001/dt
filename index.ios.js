@@ -27,7 +27,7 @@ class dt extends Component {
         shadowHidden={false}
         initialRoute={{
           component: MainPage,
-          title: '首页',
+          title: '',
           rightButtonTitle: '个人中心',
           onRightButtonPress: () => {
             this.refs.nav.push({
@@ -53,6 +53,9 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
+  search_bar: {
+    height: 100,
+  }
 });
 
 AppRegistry.registerComponent('dt', () => dt);

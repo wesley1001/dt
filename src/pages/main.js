@@ -16,8 +16,9 @@ import Moment from 'moment'
 import Swiper from 'react-native-swiper'
 import DataServices from '../network';
 import Information from './information'
-
+import SearchBar from 'react-native-search-bar';
 import Option from '../users/option'
+import SearchList from '../pages/search_list'
 
 class Main extends Component {
   constructor(props){
@@ -77,61 +78,71 @@ class Main extends Component {
 
   renderHeader() {
     return (
-      <Swiper 
-        style={styles.wrapper} 
-        showsButtons={false}
-        autoplay={true}
-        autoplayTimeout={5}
-        height={300}
-        showsPagination={false}>
-        {
-          this.state.banners.map((banner, i) => {
-            var information_id = banner.url.split("/news/")[1];
-            return (
-              <TouchableOpacity 
-                key={i}
-                onPress={() => {
-                  this.props.navigator.push({
-                    title: banner.title,
-                    component: Information,
-                    passProps: {information_id: information_id}
-                  });
-                }}>
-                <View style={styles.banner}>
-                  <Image 
-                    source={{uri: banner.image_url}}
-                    style={styles.banner_image}
-                  />
-                  <View style={styles.banner_text}>
-                    <View style={styles.keyword}>
-                      <Text style={styles.keyword_text}>{banner.keyword}</Text>
-                    </View>
-                    <View style={styles.banner_title}>
-                      <Text style={styles.banner_title_text}>{banner.title}</Text>
+      <View style={styles.main}>
+        <View style={styles.search_bar}>
+          <SearchBar
+          ref='searchBar'
+          placeholder='Search'
+          onSearchButtonPress={(e) => {
+            DataServices.GetSearchInformation(e)
+              .then( responseData => {
+                this.props.navigator.push({
+                  title: '搜索结果',
+                  component: SearchList,
+                  passProps: {information_lists: responseData}
+                })
+              })
+              .done();
+            }
+          }
+          />
+        </View>
+        <Swiper 
+          style={styles.wrapper} 
+          showsButtons={false}
+          autoplay={true}
+          autoplayTimeout={5}
+          height={300}
+          showsPagination={false}>
+          {
+            this.state.banners.map((banner, i) => {
+              var information_id = banner.url.split("/news/")[1];
+              return (
+                <TouchableOpacity 
+                  key={i}
+                  onPress={() => {
+                    this.props.navigator.push({
+                      title: banner.title,
+                      component: Information,
+                      passProps: {information_id: information_id}
+                    });
+                  }}>
+                  <View style={styles.banner}>
+                    <Image 
+                      source={{uri: banner.image_url}}
+                      style={styles.banner_image}
+                    />
+                    <View style={styles.banner_text}>
+                      <View style={styles.keyword}>
+                        <Text style={styles.keyword_text}>{banner.keyword}</Text>
+                      </View>
+                      <View style={styles.banner_title}>
+                        <Text style={styles.banner_title_text}>{banner.title}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          })
-        }
-      </Swiper>
+                </TouchableOpacity>
+              );
+            })
+          }
+        </Swiper>
+      </View>
     );
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity 
-          onPress={() => {
-            this.props.navigator.push({
-              component: Person,
-            });
-          }}>
-          <View style={styles.person}>
-            <Text>个人中心</Text>
-          </View>
-        </TouchableOpacity>
         <ListView
           renderHeader={(this.renderHeader).bind(this)}
           dataSource={this.state.information_lists} 
@@ -147,6 +158,9 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+  },
+  search_bar: {
+    // position: 'relative',
   },
   person: {
     position: 'absolute',

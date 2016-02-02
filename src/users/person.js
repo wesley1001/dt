@@ -187,17 +187,14 @@ class Person extends Component {
               
               // 向微信注册应用ID
               WeChat.registerApp('wx631251a8924fcd56', (res) => {
-                  console.log('registerApp= '+ res)
               });
 
               WeChat.isWXAppInstalled((res) => {
-                  console.log('isWXAppInstalled= '+ res)
               });
 
               let scope = 'snsapi_userinfo';
               let state = 'wechat_sdk_test'; 
               WeChat.sendAuthReq(scope, state, (res) => {
-                  console.log('sendAuthReq= '+ res)
               });
 
             }}>

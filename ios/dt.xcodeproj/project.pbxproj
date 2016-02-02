@@ -30,6 +30,7 @@
 		CBDCE15E1C587B690088950C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE15D1C587B690088950C /* SystemConfiguration.framework */; };
 		CBDCE1601C587B710088950C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE15F1C587B710088950C /* CoreTelephony.framework */; };
 		CBDCE1961C58E13C0088950C /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDCE1951C58DFB20088950C /* libRCTWeChat.a */; };
+		CBEBD9CE1C6080A20021B1A7 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEBD9CD1C6080960021B1A7 /* libRNSearchBar.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,13 @@
 			remoteGlobalIDString = D38ECF511C192AC800BDD8AE;
 			remoteInfo = RCTWeChat;
 		};
+		CBEBD9CC1C6080960021B1A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBEBD9BC1C6080960021B1A7 /* RNSearchBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNSearchBar;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -156,6 +164,7 @@
 		CBDCE15D1C587B690088950C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CBDCE15F1C587B710088950C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		CBDCE1901C58DFB20088950C /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat-ios/RCTWeChat/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
+		CBEBD9BC1C6080960021B1A7 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBEBD9CE1C6080A20021B1A7 /* libRNSearchBar.a in Frameworks */,
 				CBDCE1961C58E13C0088950C /* libRCTWeChat.a in Frameworks */,
 				CBDCE1601C587B710088950C /* CoreTelephony.framework in Frameworks */,
 				CBDCE15E1C587B690088950C /* SystemConfiguration.framework in Frameworks */,
@@ -300,6 +310,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CBEBD9BC1C6080960021B1A7 /* RNSearchBar.xcodeproj */,
 				CBDCE1901C58DFB20088950C /* RCTWeChat.xcodeproj */,
 				CBDCE1481C570FF90088950C /* RCTQQAPI.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -363,6 +374,14 @@
 			isa = PBXGroup;
 			children = (
 				CBDCE1951C58DFB20088950C /* libRCTWeChat.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CBEBD9BD1C6080960021B1A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBEBD9CD1C6080960021B1A7 /* libRNSearchBar.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -484,6 +503,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = CBEBD9BD1C6080960021B1A7 /* Products */;
+					ProjectRef = CBEBD9BC1C6080960021B1A7 /* RNSearchBar.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -576,6 +599,13 @@
 			fileType = archive.ar;
 			path = libRCTWeChat.a;
 			remoteRef = CBDCE1941C58DFB20088950C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBEBD9CD1C6080960021B1A7 /* libRNSearchBar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSearchBar.a;
+			remoteRef = CBEBD9CC1C6080960021B1A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

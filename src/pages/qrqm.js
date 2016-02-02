@@ -56,10 +56,17 @@ class Qrqm extends Component {
   }
 
   renderInformation(information){
+    console.log(information);
     return (
       <View style={styles.list}>
         <View style={styles.website}>
-          <Text style={styles.origin_website}>{information.origin_website}</Text>
+          <View style={styles.origin_website_all}>
+            <Image 
+              source={{uri: information.origin_website_icon_url || 'http://images.dtcj.com/uc%2Fadv.jpg?imageView2/1/w/16/h/16'}}
+              style={styles.origin_website_icon_url}
+            />
+            <Text style={styles.origin_website}>{information.origin_website}</Text>
+          </View>
           <Text style={styles.publish_at}>{Moment(information.publish_at).format("HH:mm:ss")}</Text>
         </View>
         <View style={styles.separator} />
@@ -160,6 +167,16 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 30,
+  },
+  origin_website_all: {
+    flex: 1,
+    flexDirection: 'column',
+    // alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  origin_website_icon_url: {
+    height: 26,
+    width: 26,
   },
   origin_website: {
     fontSize: 12,

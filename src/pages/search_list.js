@@ -32,7 +32,6 @@ class Search extends Component {
     this.state = {
       information_lists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
-
   }
 
   componentDidMount() {
@@ -130,7 +129,6 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop:60,
   },
   lists: {
     backgroundColor: 'eeeeee',

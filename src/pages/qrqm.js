@@ -13,7 +13,7 @@ import React, {
   Image,
 } from 'react-native';
 
-import Moment from 'moment'
+import Moment from '../utils/locales/zh-cn'
 import DataServices from '../network'
 import Information from '../pages/information'
 
@@ -57,17 +57,12 @@ class Qrqm extends Component {
 
   renderInformation(information){
     console.log(information);
+
     return (
       <View style={styles.list}>
         <View style={styles.website}>
-          <View style={styles.origin_website_all}>
-            <Image 
-              source={{uri: information.origin_website_icon_url || 'http://images.dtcj.com/uc%2Fadv.jpg?imageView2/1/w/16/h/16'}}
-              style={styles.origin_website_icon_url}
-            />
-            <Text style={styles.origin_website}>{information.origin_website}</Text>
-          </View>
-          <Text style={styles.publish_at}>{Moment(information.publish_at).format("HH:mm:ss")}</Text>
+          <Text style={styles.origin_website}>{information.origin_website}</Text>
+          <Text style={styles.publish_at}>{Moment(information.publish_at).locale("zh-cn").fromNow()}</Text>
         </View>
         <View style={styles.separator} />
         <TouchableOpacity onPress={()=>{

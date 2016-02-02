@@ -64,7 +64,7 @@ class Main extends Component {
           </View>
           <View style={styles.list_right} >
             <Image 
-              source={{uri: information.thumbnail}} 
+              source={{uri: information.thumbnail || 'http://images.dtcj.com/uc%2Fadv.jpg?imageView2/1/w/200/h/200'}} 
               style={styles.list_right_thumbnail} 
             />
             <View style={styles.paragraph_size}>

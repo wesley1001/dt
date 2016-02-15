@@ -28,6 +28,27 @@ var DataServices = {
   'QqSimpleUserinfo': QqSimpleUserinfo,
   'WechatSimpleUserinfo': WechatSimpleUserinfo,
   'GetSearchInformation': GetSearchInformation,
+  'UpdateUser': UpdateUser,
+}
+
+function UpdateUser(user_name, token){
+  var url = `${SERVER}/user`;
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+      "Content-Type": "application/json",
+    }, 
+    method: 'PUT',
+    body: JSON.stringify({
+      auth_token: token,
+      user: {
+        name: user_name,
+      },
+    })
+  })
+  .then((response) => {
+    return response_date(response)
+  })
 }
 
 // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code

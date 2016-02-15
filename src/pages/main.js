@@ -106,18 +106,37 @@ class Main extends Component {
           showsPagination={false}>
           {
             this.state.banners.map((banner, i) => {
-              var information_id = banner.url.split("/news/")[1];
-              return (
-                <TouchableOpacity 
-                  key={i}
-                  onPress={() => {
-                    this.props.navigator.push({
-                      title: banner.title,
-                      component: Information,
-                      passProps: {information_id: information_id}
-                    });
-                  }}>
-                  <View style={styles.banner}>
+              if(banner.url){
+                var information_id = banner.url.split("/news/")[1];
+                return (
+                  <TouchableOpacity 
+                    key={i}
+                    onPress={() => {
+                      this.props.navigator.push({
+                        title: banner.title,
+                        component: Information,
+                        passProps: {information_id: information_id}
+                      });
+                    }}>
+                    <View style={styles.banner}>
+                      <Image 
+                        source={{uri: banner.image_url}}
+                        style={styles.banner_image}
+                      />
+                      <View style={styles.banner_text}>
+                        <View style={styles.keyword}>
+                          <Text style={styles.keyword_text}>{banner.keyword}</Text>
+                        </View>
+                        <View style={styles.banner_title}>
+                          <Text style={styles.banner_title_text}>{banner.title}</Text>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )
+              }else{
+                return (
+                  <View style={styles.banner} key={i}>
                     <Image 
                       source={{uri: banner.image_url}}
                       style={styles.banner_image}
@@ -131,8 +150,9 @@ class Main extends Component {
                       </View>
                     </View>
                   </View>
-                </TouchableOpacity>
-              );
+                )
+              }
+              
             })
           }
         </Swiper>

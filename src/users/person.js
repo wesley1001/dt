@@ -29,7 +29,7 @@ import * as QQAPI from 'react-native-qq';
 
 import WeChat from 'react-native-wechat-ios';
 
-class Person extends Component {
+class PersonCenter extends Component {
   constructor(props){
     super(props)
 
@@ -110,15 +110,18 @@ class Person extends Component {
           onPress={() => {
             this.props.navigator.push({
               component: User,
-              title: '个人资料'
+              title: '个人账号'
             })
           }}
+          style={styles.me}
         >
           <Image 
             source={{uri: this.state.user_avatar || 'http://images.dtcj.com/news/020aa1244f86ab01d27821977760b6e978908a0628d21e7120c54d45912f4900'}} 
             style={styles.avatar}
           />
-          <Text>{this.state.user_name}</Text>
+          <View style={styles.user_name}>
+            <Text>{this.state.user_name}</Text>
+          </View>
 
         </TouchableOpacity>
         
@@ -254,17 +257,27 @@ var styles = StyleSheet.create({
   container: {
     flex:1,
     flexDirection: 'column',
-    marginTop:100,
+    marginTop:65,
   },
   user: {
     flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  me: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
   avatar: {
-    height: 80,
-    width: 80,
-  },  
+    height: 60,
+    width: 60,
+    borderRadius:30,
+  },
+  user_name: {
+
+  },
   detail: {
     padding: 10,
   },
@@ -291,4 +304,4 @@ var styles = StyleSheet.create({
   
 });
 
-export default Person;
+export default PersonCenter;

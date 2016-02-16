@@ -18,7 +18,13 @@ import DataServices from '../network'
 import Person from '../users/person'
 import Nickname from '../users/nickname'
 
+// import qiniu from 'qiniu'
+
+// var qiniu = require('qiniu');
+
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
+
+// var qiniu = require('qiniu');
 
 import '../storage'
 
@@ -95,6 +101,27 @@ class User extends Component {
     })
   }
 
+  uploadFile(localFile, key, uptoken) {
+    var extra = new qiniu.io.PutExtra();
+    //extra.params = params;
+    //extra.mimeType = mimeType;
+    //extra.crc32 = crc32;
+    //extra.checkCrc = checkCrc;
+
+    qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
+      if(!err) {
+        // 上传成功， 处理返回值
+        console.log(ret.key, ret.hash);
+        // ret.key & ret.hash
+      } else {
+        // 上传失败， 处理返回代码
+        console.log(err);
+        // http://developer.qiniu.com/docs/v6/api/reference/codes.html
+      }
+    });
+  }
+
+
   selectPhoto() {
     var options = {
       title: 'Select Avatar', // specify null or empty string to remove the title
@@ -145,11 +172,14 @@ class User extends Component {
         this.setState({
           avatarSource: source
         });
+
+        // this.uploadFile(source, '123456789', '2Rk4xCaWinrr1iooUWR4HRTpkiVb8lzP4CXH8y5A:uphLFS_pYiW3oPRUJXb4YDR7PcM=:eyJzY29wZSI6ImR0Y2oiLCJkZWFkbGluZSI6Mjg2OTE5NzM5Nn0=')
       }
     });
 
   }
 
+  
   render() {
     return (
       <View style={styles.container}>

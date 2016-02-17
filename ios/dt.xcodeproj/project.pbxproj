@@ -767,7 +767,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/**",
 					"$(SRCROOT)/../node_modules/react-native-wechat-ios/RCTWeChat/**",
-					"$(SRCROOT)/../node_modules/react-native-wechat/ios/**",
 					"$(SRCROOT)/../node_modules/qiniu/**",
 				);
 				INFOPLIST_FILE = dt/Info.plist;
@@ -797,7 +796,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/**",
-					"$(SRCROOT)/../node_modules/react-native-wechat/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-wechat-ios/RCTWeChat/**",
 					"$(SRCROOT)/../node_modules/qiniu/**",
 				);

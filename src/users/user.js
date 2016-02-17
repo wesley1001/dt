@@ -121,7 +121,6 @@ class User extends Component {
     });
   }
 
-
   selectPhoto() {
     var options = {
       title: 'Select Avatar', // specify null or empty string to remove the title

@@ -133,12 +133,12 @@ class UserLogin extends Component {
             </Text>
           </TouchableOpacity>
           <View style={styles.another}>
-            <TouchableOpacity onPress={this._forgot} style={styles.forget}>
+            <TouchableOpacity onPress={this._forgot.bind(this)} style={styles.forget}>
               <Text>
                 忘记密码？
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._register} style={styles.register}>
+            <TouchableOpacity onPress={this._register.bind(this)} style={styles.register}>
               <Text style={styles.have_not}>
                 还没有账号？<Text>请注册</Text>
               </Text>

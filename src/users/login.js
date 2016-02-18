@@ -1,58 +1,100 @@
 'use strict';
 
-var React = require('react-native');
-var DataServices = require('../network');
-var UserRegister = require('./register');
-var UserForgot = require('./forgot');
-
-var HistoryList = require('../information/history_list');
-
-var Main = require('../pages/main');
-
-var {
-  AsyncStorage,
+import React, {
+  Component,
   TouchableOpacity,
   View,
   Text,
   StyleSheet,
   TextInput,
   Image,
-} = React;
+} from 'react-native';
 
-var UserLogin = React.createClass({
-  getInitialState() {
-    return {
+import DataServices from '../network'
+import UserRegister from './register'
+import UserForgot from './forgot'
+import HistoryList from '../information/history_list'
+import Main from '../pages/main'
+
+import '../storage'
+
+class UserLogin extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
       telephone: "15201991025",
       password: "12345678",
       result: {},
     }
-  },
-  componentDidMount: function() {
+  }
 
-  },
-  async _handlePress(event) {
-    try {
-      var responseData = await DataServices.UserLogin(this.state.telephone, this.state.password)
+  componentDidMount() {
+    global.storage.load({
+      key: 'user',
+
+      //autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的同步方法
+      autoSync: true,
+
+      //syncInBackground(默认为true)意味着如果数据过期，
+      //在调用同步方法的同时先返回已经过期的数据。
+      //设置为false的话，则始终强制返回同步方法提供的最新数据(当然会需要更多等待时间)。
+      syncInBackground: false
+    }).then( ret => {
+      //如果找到数据，则在then方法中返回
       this.setState({
-        result: responseData,
-      });
-      
-      await AsyncStorage.setItem("token", responseData.auth_token);
+        user_name: ret.user_name,
+        user_avatar: ret.user_avatar,
+        token: ret.token,
+      })
 
-      this.props.navigator.push({
-        title: '首页',
-        component: HistoryList,
-      });
-    }catch (error){
-      this._appendMessage('AsyncStorage error: ' + error.message);
-    }
-  },
+    }).catch( err => {
+      if(err == undefined){
+        // 未存内容，未登录
+        console.log(err);
+      }
+      //如果没有找到数据且没有同步方法，
+      //或者有其他异常，则在catch中返回
+    })
+  }
+
+  _handlePress(event) {
+    DataServices.UserLogin(this.state.telephone, this.state.password)
+      .then( responseData => {
+        this.setState({
+          result: responseData,
+        });
+
+        global.storage.save({
+          key: 'user',  //注意:请不要在key中使用_下划线符号!
+          rawData: { 
+            password: this.state.password,
+            user_name: responseData.name,
+            user_avatar: responseData.avatar,
+            token: responseData.auth_token,
+          },
+
+          //如果不指定过期时间，则会使用defaultExpires参数
+          //如果设为null，则永不过期
+          expires: 1000 * 3600
+        });
+
+        this.props.navigator.push({
+          title: '首页',
+          component: HistoryList,
+        });
+      })
+
+      
+  }
+
   _forgot() {
     this.props.navigator.push({
       title: '重置密码',
       component: UserForgot,
     });
-  },
+  }
+
   _register() {
     this.props.navigator.push({
       title: '手机注册',
@@ -63,8 +105,9 @@ var UserLogin = React.createClass({
       // barTintColor: 'yellow',
       // navigationBarHidden: true,
     });
-  },
-  render: function() {
+  }
+
+  render() {
     return (
         <View style={styles.container}>
           <TextInput 
@@ -84,7 +127,7 @@ var UserLogin = React.createClass({
             onChangeText={(password)=> this.setState({password})} 
             value={this.state.password}
           />
-          <TouchableOpacity onPress={this._handlePress}>
+          <TouchableOpacity onPress={this._handlePress.bind(this)}>
             <Text style={styles.button}>
               登录
             </Text>
@@ -118,8 +161,8 @@ var UserLogin = React.createClass({
           </View>
       </View>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   container: {

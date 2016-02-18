@@ -10,6 +10,7 @@ import React, {
   Dimensions,
   TouchableOpacity,
   Alert,
+  AlertIOS,
   ListView,
   Image,
 } from 'react-native';
@@ -17,6 +18,7 @@ import React, {
 import DataServices from '../network'
 import Person from '../users/person'
 import Nickname from '../users/nickname'
+import Resetpassword from '../users/reset_password'
 
 // import qiniu from 'qiniu'
 
@@ -31,6 +33,19 @@ import '../storage'
 class User extends Component {
   constructor(props){
     super(props)
+
+    this.promptResponse = this.promptResponse.bind(this);
+    this.state = {
+      promptValue: undefined,
+    };
+    this.title = '验证原密码';
+    this.defaultValue = '为了保障您的数据安全，修改密码前请填写原密码';
+    this.buttons = [{
+      text: '取消',
+    }, {
+      text: '确定',
+      onPress: this.promptResponse
+    }];
 
     this.state = {
       token: null,
@@ -52,6 +67,7 @@ class User extends Component {
       this.setState({
         user_name: ret.user_name,
         user_avatar: ret.user_avatar,
+        password: ret.password,
         token: ret.token,
       })
     }).catch( err => {
@@ -99,6 +115,10 @@ class User extends Component {
       component: Nickname,
       title: '昵称'
     })
+  }
+
+  _handlePassword() {
+
   }
 
   uploadFile(localFile, key, uptoken) {
@@ -172,13 +192,33 @@ class User extends Component {
           avatarSource: source
         });
 
+        // 上传图片
         // this.uploadFile(source, '123456789', '2Rk4xCaWinrr1iooUWR4HRTpkiVb8lzP4CXH8y5A:uphLFS_pYiW3oPRUJXb4YDR7PcM=:eyJzY29wZSI6ImR0Y2oiLCJkZWFkbGluZSI6Mjg2OTE5NzM5Nn0=')
       }
     });
 
   }
 
-  
+  prompt() {
+    // Flow's apply support is broken: #7035621
+    ((AlertIOS.prompt: any).apply: any)(AlertIOS, arguments);
+  }
+
+  promptResponse(promptValue) {
+    console.log(this.state.password == promptValue)
+    if(this.state.password == promptValue){
+      this.props.navigator.push({
+        component: Resetpassword,
+        title: '设置新密码'
+      })
+    }else{
+      Alert.alert(
+        '密码不正确',
+        null,
+      )
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -209,14 +249,17 @@ class User extends Component {
             <Text>></Text>
           </View>
         </TouchableOpacity>
-        <View style={styles.resetpassword}>
+        <TouchableOpacity
+          onPress={this.prompt.bind(this, this.title, this.defaultValue, null, this.promptResponse)}
+          style={styles.resetpassword}
+          >
           <View>
             <Text>修改密码</Text>
           </View>
           <View>
             <Text>></Text>
           </View>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={this._handlePress.bind(this)}>
           <Text style={styles.logout}>
             退出账号

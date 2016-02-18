@@ -29,6 +29,7 @@ var DataServices = {
   'WechatSimpleUserinfo': WechatSimpleUserinfo,
   'GetSearchInformation': GetSearchInformation,
   'UpdateUser': UpdateUser,
+  'UpdatePassword': UpdatePassword,
 }
 
 function UpdateUser(user_name, token){
@@ -44,6 +45,24 @@ function UpdateUser(user_name, token){
       user: {
         name: user_name,
       },
+    })
+  })
+  .then((response) => {
+    return response_date(response)
+  })
+}
+
+function UpdatePassword(password, token){
+  var url = `${SERVER}/user/password`;
+  return fetch(url, {
+    headers: {
+      "Accept-Version": "v2",
+      "Content-Type": "application/json",
+    }, 
+    method: 'PUT',
+    body: JSON.stringify({
+      auth_token: token,
+      password: password,
     })
   })
   .then((response) => {
@@ -190,6 +209,7 @@ function response_date(response){
 
 function UserLogin(telephone, password){
   var url = `${SERVER}/user_session`;
+  console.log(url)
   return fetch(url, {
     headers: {
       "Accept-Version": "v2",
